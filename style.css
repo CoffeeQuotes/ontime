@@ -1,0 +1,734 @@
+/***
+ * 
+ * 
+Color Scheme:
+______________________________________
+Primary Color: #007bff (Blue)
+Secondary Color: #6c757d (Gray)
+Accent Color: #28a745 (Green)
+Error Color: #dc3545 (Red)
+Background Color: #f8f9fa (Light Gray)
+Text Color: #343a40 (Dark Gray)
+
+Typography:
+_______________________________________
+Font Family: Roboto, Arial, sans-serif
+Font Sizes:
+Heading 1: 36px
+Heading 2: 24px
+Heading 3: 18px
+Body: 16px
+Line Height: 1.5
+
+Buttons:
+______________________________________
+Primary Button:
+
+Background Color: Primary Color
+Text Color: White
+Padding: 10px 20px
+Border: None
+Border Radius: 5px
+***************************************
+Secondary Button:
+
+Background Color: Secondary Color
+Text Color: White
+Padding: 10px 20px
+Border: None
+Border Radius: 5px
+***************************************
+Forms:
+_______________________________________
+Input Fields:
+***************************************
+Background Color: White
+Border: 1px solid #ced4da (Light Gray)
+Border Radius: 3px
+Padding: 10px
+Font Size: 16px
+***************************************
+Error States:
+***************************************
+Input Border Color: Error Color
+***************************************
+Navigation:
+Header:
+***************************************
+Background Color: Primary Color
+Text Color: White
+Padding: 10px 20px
+***************************************
+Footer:
+_______________________________________
+Background Color: Secondary Color
+Text Color: White
+Padding: 10px 20px
+
+Alerts:
+_______________________________________
+Success Alert:
+***************************************
+Background Color: #d4edda (Light Green)
+Text Color: #155724 (Dark Green)
+Border: 1px solid #c3e6cb (Green)
+
+Error Alert:
+***************************************
+Background Color: #f8d7da (Light Red)
+Text Color: #721c24 (Dark Red)
+Border: 1px solid #f5c6cb (Red)
+
+General Styles:
+***************************************
+Box Shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+Border Radius: 5px
+Width: Max-width: 1200px; Margin: 0 auto;
+
+Icons:
+****************************************
+Utilize Font Awesome icons for consistent iconography across the app.
+
+Mobile Responsiveness:
+_________________________________________
+Ensure all elements are responsive and adapt well to different screen sizes.
+Utilize media queries to adjust styles for smaller screens.
+
+ * 
+ * */
+ @import url("normalize.css");
+
+ :root {
+     --primary-color: #007bff;
+     --secondary-color: #6c757d;
+     --accent-color: #28a745;
+     --error-color: #dc3545;
+     --bg-color: #f8f9fa;
+     --text-color: #343a40;
+ }
+ 
+ /* body element */
+ body {
+     font-family: 'Roboto', Arial, sans-serif;
+     font-size: 16px;
+     line-height: 1.5;
+     color: var(--text-color);
+ }
+ 
+ /* heading element */
+ h1 {
+     font-size: 36px;
+     margin-bottom: 20px;
+ }
+ 
+ h2 {
+     font-size: 24px;
+     margin-bottom: 15px;
+ }
+ 
+ /* Add styles for h3, h4, h5, h6 as necessary */
+ 
+ /** Paragraphs and text elements */
+ p {
+     margin-bottom: 15px;
+ }
+ 
+ ul,
+ ol {
+     margin-bottom: 15px;
+ }
+ 
+ /* Add styles for other text elements like anchors, spans, etc. */
+ 
+ /** Links */
+ a {
+     color: #007bff;
+     text-decoration: none;
+ }
+ 
+ a:hover {
+     text-decoration: underline;
+ }
+ 
+ /** Form */
+ input,
+ textarea {
+     font-family: 'Roboto', Arial, sans-serif;
+     font-size: 16px;
+     padding: 10px;
+     border: 1px solid #ced4da;
+     border-radius: 3px;
+ }
+ 
+ button, .button {
+     font-family: 'Roboto', Arial, sans-serif;
+     font-size: 16px;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 5px;
+     background-color: #007bff;
+     color: #fff;
+     font-weight: 600;
+     text-decoration: none;
+ }
+ 
+ .small-button {
+     font-size: 14px!important;
+     padding: 8px 16px!important;
+ }
+ 
+ .primary-button {
+     background-color: #007bff;
+     color: #fff;
+ }
+ 
+ .secondary-button {
+     background-color: #6c757d;
+     color: #fff;
+ }
+ 
+ .success-button {
+     background-color: #28a745;
+     color: #fff;
+ }
+ 
+ .danger-button {
+     background-color: #dc3545;
+     color: #fff;
+ }
+ 
+ .warning-button {
+     background-color: #ffc107;
+     color: #212529;
+ }
+ 
+ .info-button {
+     background-color: #17a2b8;
+     color: #fff;
+ }
+ 
+ .light-button {
+     background-color: #f8f9fa;
+     color: #212529;
+ }
+ 
+ .dark-button {
+     background-color: #343a40;
+     color: #fff;
+ }
+ 
+ 
+ .task-form {
+     width: 600px;
+     margin: 0 auto;
+ }
+ 
+ /** Form **/
+ .form-row {
+     margin-bottom: 20px;
+     display: flex;
+     flex-direction: column;
+     align-items: stretch;
+ }
+ 
+ /*** Header ***/
+ #primary-header {
+     display: flex;
+     background-color: var(--bg-color);
+     /*    flex-direction: row;*/
+     flex-wrap: nowrap;
+     justify-content: space-evenly;
+ }
+ 
+ #primary-header nav {
+     margin: auto 0;
+ }
+ 
+ #primary-header>nav>a {
+     margin: 0 20px;
+ }
+ 
+ #primary-header h1 {
+     margin: 10px 20px;
+     color: var(--primary-color);
+ }
+ 
+ /*** Wrapper **/
+ #wrapper {
+     min-height: 80vh;
+     margin: 0 auto;
+     display: flex;
+     flex-direction: column;
+     /* justify-content: center; */
+     /* align-items: stretch; */
+ }
+ 
+ .eighty-width {
+     width: 100vh;
+ }
+ 
+ 
+ /*** Footer ***/
+ footer {
+     padding: 10px 20px;
+     background-color: var(--bg-color);
+     color: var(--primary-color);
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+ }
+ 
+ .profile-box {
+     display: flex;
+ }
+ 
+ .profile-box div {
+     padding: 20px;
+ }
+ 
+ .profile-box div img {
+     border-radius: 50%;
+     border: 6px solid var(--bg-color);
+ }
+ 
+ /****Utility class**/
+ .secondary-text {
+     color: var(--secondary-color);
+ }
+ 
+/*** Priority ***/
+.priority-very-low {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+}
+
+.priority-low {
+    background-color: #fff3cd; /* Light yellow */
+    color: #664d03; /* Dark yellow */
+}
+
+.priority-medium {
+    background-color: #cce5ff; /* Light blue */
+    color: #004085; /* Dark blue */
+}
+
+.priority-high {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+}
+
+.priority-very-high {
+    background-color: #f2f2f2; /* Light grey */
+    color: #000; /* Black */
+}
+
+ 
+ /*** Status ***/
+ 
+ .status-not-started {
+     color: #dc3545;
+     /* Red color */
+ }
+ 
+ .status-in-progress {
+     color: #ffc107;
+     /* Yellow color */
+ }
+ 
+ .status-stopped {
+     color: #6c757d;
+     /* Grey color */
+ }
+ 
+ .status-completed {
+     color: #28a745;
+     /* Green color */
+ }
+ 
+ /*** Edit icon ***/
+ .image-container {
+     position: relative;
+     display: inline-block;
+ }
+ 
+ .edit-icon {
+     position: absolute;
+     top: 50%;
+     /* Position the icon vertically at 50% from the top */
+     left: 50%;
+     /* Position the icon horizontally at 50% from the left */
+     transform: translate(-50%, -50%);
+     /* Center the icon both vertically and horizontally */
+     visibility: hidden;
+     opacity: 0;
+     transition: opacity 0.3s ease-in-out;
+ }
+ 
+ .edit-head-icon {
+     visibility: hidden;
+     opacity: 0;
+     transition: opacity 0.3s ease-in-out;
+ }
+ 
+ .image-container:hover .edit-icon,
+ #aboutHeading:hover .edit-head-icon {
+     visibility: visible;
+     opacity: 1;
+ }
+ 
+ .edit-icon i {
+     font-size: 24px;
+     color: #fff;
+     /* Adjust the color of the edit icon */
+     background-color: rgba(0, 0, 0, 0.5);
+     /* Semi-transparent background */
+     padding: 5px;
+     border-radius: 50%;
+ }
+ 
+ #myModal {
+     display: none;
+ }
+ 
+ 
+ /* Modal styles */
+ .modal {
+     display: none;
+     /* Hidden by default */
+     position: fixed;
+     /* Stay in place */
+     z-index: 1000;
+     /* Sit on top */
+     left: 0;
+     top: 0;
+     width: 100%;
+     /* Full width */
+     height: 100%;
+     /* Full height */
+     overflow: auto;
+     /* Enable scroll if needed */
+     background-color: rgba(0, 0, 0, 0.5);
+     /* Black background with transparency */
+ }
+ 
+ /* Modal content */
+ .modal-content {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     background-color: #fff;
+     padding: 20px;
+     border-radius: 5px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+     /* Add shadow */
+ }
+ 
+ /* Close button */
+ .close {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     cursor: pointer;
+     font-size: 20px;
+     color: #aaa;
+ }
+ 
+ .close:hover,
+ .close:focus {
+     color: #000;
+ }
+ 
+ #cropperContainer {
+     margin: 10px auto;
+     background-image: url('picture.png');
+     /* Set the background image */
+     background-position: center;
+     /* Center the background image */
+     background-clip: padding-box;
+     /* Clip the background image within the padding box */
+     background-size: cover;
+     /* Cover the container with the background image */
+     width: 320px;
+     /* Set the width of the container */
+     height: 320px;
+     /* Set the height of the container */
+     border: 2px dashed #ccc;
+     /* Add a dashed border for visual indication */
+     position: relative;
+     /* Position the container relative for absolute positioning of cropper */
+ }
+ 
+ #cropperContainer img {
+     display: block;
+     /* Ensure the image is displayed as a block element */
+     max-width: 100%;
+     /* Set maximum width to 100% to fit the container */
+     max-height: 100%;
+     /* Set maximum height to 100% to fit the container */
+     margin: 0 auto;
+     /* Center the image horizontally */
+     position: absolute;
+     /* Position the image absolutely for easy cropping */
+     top: 0;
+     /* Align the image to the top of the container */
+     left: 0;
+     /* Align the image to the left of the container */
+     right: 0;
+     /* Align the image to the right of the container */
+     bottom: 0;
+     /* Align the image to the bottom of the container */
+ }
+ 
+ 
+ #modalFormFlex {
+     display: flex;
+ }
+ 
+ .rightSideModal {
+     display: flex;
+     padding: 20px;
+     flex-direction: column;
+     justify-content: space-evenly;
+ }
+ 
+ a,
+ button, input[type=button] {
+     cursor: pointer;
+ }
+
+ /** Flex Utilities **/
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-around {
+    justify-content: space-around;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+.align-items-end {
+    align-items: flex-end;
+}
+
+.align-items-baseline {
+    align-items: baseline;
+}
+
+.align-items-stretch {
+    align-items: stretch;
+}
+
+.align-self-start {
+    align-self: flex-start;
+}
+
+.align-self-end {
+    align-self: flex-end;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
+.align-self-baseline {
+    align-self: baseline;
+}
+
+.align-self-stretch {
+    align-self: stretch;
+}
+
+.order-first {
+    order: -1;
+}
+
+.order-last {
+    order: 9999;
+}
+
+.order-1 {
+    order: 1;
+}
+
+.order-2 {
+    order: 2;
+}
+
+.order-3 {
+    order: 3;
+}
+
+.order-4 {
+    order: 4;
+}
+
+.order-5 {
+    order: 5;
+}
+
+.order-6 {
+    order: 6;
+}
+
+.order-7 {
+    order: 7;
+}
+
+.order-8 {
+    order: 8;
+}
+
+.order-9 {
+    order: 9;
+}
+
+.order-10 {
+    order: 10;
+}
+
+.flex-grow-0 {
+    flex-grow: 0;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.flex-shrink-1 {
+    flex-shrink: 1;
+}
+
+.flex-basis-auto {
+    flex-basis: auto;
+}
+
+.flex-basis-0 {
+    flex-basis: 0;
+}
+
+.flex-basis-25 {
+    flex-basis: 25%;
+}
+
+.flex-basis-50 {
+    flex-basis: 50%;
+}
+
+.flex-basis-75 {
+    flex-basis: 75%;
+}
+
+.flex-basis-100 {
+    flex-basis: 100%;
+}
+
+.flex-grow-auto {
+    flex-grow: auto;
+}
+
+.flex-grow-25 {
+    flex-grow: 0.25;
+}
+
+.flex-grow-50 {
+    flex-grow: 0.5;
+}
+
+.flex-grow-75 {
+    flex-grow: 0.75;
+}
+
+.flex-grow-100 {
+    flex-grow: 1;
+}
+
+.flex-shrink-auto {
+    flex-shrink: auto;
+}
+
+.flex-shrink-25 {
+    flex-shrink: 0.25;
+}
+
+.flex-shrink-50 {
+    flex-shrink: 0.5;
+}
+
+.flex-shrink-75 {
+    flex-shrink: 0.75;
+}
+
+.flex-shrink-100 {
+    flex-shrink: 1;
+}
+
+/*** Margin & Padding**/
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+.p-10 {
+    padding: 10px;
+}
+
+.kanban-box {
+    min-width: 20%; 
+    margin: 10px;
+    padding: 10px;
+    border-left: 4px dashed #ccc;
+}
+
+
+.progress-bar {
+    width: 100%;
+    background-color: #f0f0f0;
+    height: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .progress {
+    width: 0%;
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+  }
+  
+  .countdown-timer {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}

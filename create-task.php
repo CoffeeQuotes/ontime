@@ -1,0 +1,104 @@
+<?php 
+// require 'SessionManager.php';
+require 'vendor/autoload.php';
+use System\SessionManager;
+$session = new SessionManager();
+// Define constants if not defined
+if (!defined('CONSTANTS')) {
+    define('CONSTANTS', require 'constants.php');
+}
+if(!$session->get('logged_user')) {
+	header("Location: ".CONSTANTS['site_url']."login.php");
+}
+if($session->get('errors')) {
+	$errors = $session->get('errors');
+	$session->delete('errors');
+}
+
+$user = $session->get('logged_user'); 
+// print_r($user);
+
+?>
+<?php include 'partials/header.php' ?>
+<p><?php echo $errors['failed']??''; ?></p>
+<form method="post" action="process-task.php" class="task-form">
+    <fieldset>
+        <legend>Create a task</legend>
+        <div class="form-row">
+            <input type="hidden" name="user_id" value="<?= $user['id']; ?>"/>
+            <label for="title_field">Title</label>
+            <input type="text" name="title" id="title_field" placeholder="Enter title"/>
+            <?php 
+                if(isset($errors['title'])) {
+                    foreach($errors['title'] as $error) {
+                        echo $error . "<br />";
+                    }
+                }
+            ?>
+        </div>
+        <div class="form-row">
+            <label for="description_field">Description</label>
+            <textarea name="description" id="description_field"></textarea>
+            <?php 
+                if(isset($errors['description'])) {
+                    foreach($errors['description'] as $error) {
+                        echo $error . "<br />";
+                    }
+                }
+            ?>
+        </div>
+        <div class="form-row">
+            <label for="deadline_field">Deadline</label>
+        	<input type="text" name="deadline" id="deadline_field" placeholder="Select deadline"/>
+            <?php 
+                if(isset($errors['deadline'])) {
+                    foreach($errors['deadline'] as $error) {
+                        echo $error . "<br />";
+                    }
+                }
+            ?>
+        </div>
+        <div class="form-row">
+            <label for="priority_field">Priority</label>
+            <select name="priority" id="priority_field">
+                <option value="very-low">Very Low</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="very-high">Very High</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <input type="submit" value="Create Task"/>
+        </div>
+    </fieldset>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script type="text/javascript">
+   // Get the current date and time
+    // var now = new Date();
+
+    // // Format the date and time as a string suitable for the value attribute of the input element
+    // var year = now.getFullYear();
+    // var month = ('0' + (now.getMonth() + 1)).slice(-2);
+    // var day = ('0' + now.getDate()).slice(-2);
+    // var hours = ('0' + now.getHours()).slice(-2);
+    // var minutes = ('0' + now.getMinutes()).slice(-2);
+    // var currentDateTime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
+    // // Set the minimum attribute of the input element to the current date and time
+    // document.getElementById('deadline_field').setAttribute('min', currentDateTime);
+    // Initialize Flatpickr on the deadline_field input
+flatpickr('#deadline_field', {
+    enableTime: true, // Enable time selection
+    dateFormat: 'Y-m-d H:i', // Date format
+    time_24hr: true, // Use 24-hour time format
+    minDate: 'today', // Set minimum date to today
+    altInput: true, // Show the selected date and time in the input field
+    altFormat: 'F j, Y H:i', // Format for displaying the selected date and time
+    placeholder: 'Select deadline', // Placeholder text
+});
+
+</script>
+<?php include 'partials/footer.php' ?>
