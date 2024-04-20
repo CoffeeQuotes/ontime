@@ -45,10 +45,26 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
         <?php
 foreach ($tasks as $task): ?>
             <?php if ($task['status'] == 'not-started'): ?>
-                <div class="task p-10 mb-10 priority-<?= $task['priority']?>" data-deadline="<?= strtotime($task['deadline']) ?>">
+                <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
             <h3><?php echo $task["title"]; ?></h3>    
             <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-            <p><?php echo $task["description"]; ?></p>   
+            <p><?php echo $task["description"]; ?></p>
+            <?php
+        $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(':task_id', $task['id']);
+        $statement->execute();
+        $task_assets = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($task_assets) > 0) {
+            foreach ($task_assets as $asset) {
+                if ($asset['type'] == 'image/jpeg' || $asset['type'] == 'image/png') {
+?>
+                            <img src="<?php echo CONSTANTS['site_url'] . 'uploads/' . $asset['location']; ?>" width="100" height="100"/>
+                            <?php
+                }
+            }
+        }
+?>   
             <div class="countdown-timer"></div> <!-- Display countdown timer here --> 
             <div class="flex justify-content-between">    
                 <span class="status-<?=$task["status"] ?>"><small><?=str_replace("-", " ", strtoupper($task["status"])) ?></small></span>
@@ -65,10 +81,26 @@ endforeach; ?>
     <?php
 foreach ($tasks as $task): ?>
     <?php if ($task['status'] == 'in-progress'): ?>
-        <div class="task p-10 mb-10 priority-<?= $task['priority']?>" data-deadline="<?= strtotime($task['deadline']) ?>">
+        <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
         <h3><?php echo $task["title"]; ?></h3>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-        <p><?php echo $task["description"]; ?></p>    
+        <p><?php echo $task["description"]; ?></p> 
+        <?php
+        $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(':task_id', $task['id']);
+        $statement->execute();
+        $task_assets = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($task_assets) > 0) {
+            foreach ($task_assets as $asset) {
+                if ($asset['type'] == 'image/jpeg' || $asset['type'] == 'image/png') {
+?>
+                            <img src="<?php echo CONSTANTS['site_url'] . 'uploads/' . $asset['location']; ?>" width="100" height="100"/>
+                            <?php
+                }
+            }
+        }
+?>      
         <div class="countdown-timer"></div> <!-- Display countdown timer here -->
         <div class="flex justify-content-between">    
             <span class="status-<?=$task["status"] ?>"><small><?=str_replace("-", " ", strtoupper($task["status"])) ?></small></span>
@@ -84,12 +116,28 @@ endforeach; ?>
          <h2><i class="fas fa-check-circle"></i> Completed</h2>
     <?php foreach ($tasks as $task): ?>
         <?php if ($task['status'] == 'completed'): ?>
-            <div class="task p-10 mb-10 priority-<?= $task['priority']?>" data-deadline="<?= strtotime($task['deadline']) ?>">
+            <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
 
             
         <h3><?php echo $task["title"]; ?></h3>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
         <p><?php echo $task["description"]; ?></p>
+        <?php
+        $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(':task_id', $task['id']);
+        $statement->execute();
+        $task_assets = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($task_assets) > 0) {
+            foreach ($task_assets as $asset) {
+                if ($asset['type'] == 'image/jpeg' || $asset['type'] == 'image/png') {
+?>
+                            <img src="<?php echo CONSTANTS['site_url'] . 'uploads/' . $asset['location']; ?>" width="100" height="100"/>
+                            <?php
+                }
+            }
+        }
+?>   
         <div class="countdown-timer"></div> <!-- Display countdown timer here -->
         <div class="flex justify-content-between">    
             <span class="status-<?=$task["status"] ?>"><small><?=str_replace("-", " ", strtoupper($task["status"])) ?></small></span>
@@ -106,10 +154,26 @@ endforeach; ?>
     <?php
 foreach ($tasks as $task): ?>
         <?php if ($task['status'] == 'stopped'): ?>
-            <div class="task p-10 mb-10 priority-<?= $task['priority']?>" data-deadline="<?= strtotime($task['deadline']) ?>">
+            <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
         <h3><?php echo $task["title"]; ?></h3>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-        <p><?php echo $task["description"]; ?></p>  
+        <p><?php echo $task["description"]; ?></p> 
+        <?php
+        $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(':task_id', $task['id']);
+        $statement->execute();
+        $task_assets = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($task_assets) > 0) {
+            foreach ($task_assets as $asset) {
+                if ($asset['type'] == 'image/jpeg' || $asset['type'] == 'image/png') {
+?>
+                            <img src="<?php echo CONSTANTS['site_url'] . 'uploads/' . $asset['location']; ?>" width="100" height="100"/>
+                            <?php
+                }
+            }
+        }
+?>    
         <div class="countdown-timer"></div> <!-- Display countdown timer here -->  
         <div class="flex justify-content-between">    
             <span class="status-<?=$task["status"] ?>"><small><?=str_replace("-", " ", strtoupper($task["status"])) ?></small></span>

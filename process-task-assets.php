@@ -26,8 +26,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				// Specify the directory where you want to store uploaded files 
 				$uploadDir = "uploads/";
 
-				// Generate a unique file name to avoid overwriting existing files 
-				$fileDestination = $uploadDir . uniqid() .  "_" . $fileName;
+				// Generate a unique file name to avoid overwriting existing files
+				$fileName = uniqid() .  "_" . $fileName; 
+				$fileDestination = $uploadDir . $fileName;
 
 				// Move the uploaded file to the desired directory 
 				if(move_uploaded_file($fileTmpname, $fileDestination)) {
