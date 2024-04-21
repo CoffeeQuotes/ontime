@@ -14,6 +14,7 @@ if($session->get('logged_user')) {
  }
 ?>
 <?php include 'partials/header.php'; ?>
+<div class="center-50">
 <form method="post" action="process-login.php">
 	<fieldset class="flex flex-column">
 		<legend>Log into your account</legend>
@@ -38,5 +39,5 @@ if($session->get('logged_user')) {
 		<input type="submit" value="Sign in"/>
 	</fieldset>
 </form>
-
+</div>
 <?php include 'partials/footer.php'; ?>

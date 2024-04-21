@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 20, 2024 at 09:47 PM
+-- Generation Time: Apr 21, 2024 at 06:51 PM
 -- Server version: 10.6.12-MariaDB-1:10.6.12+maria~ubu2004-log
 -- PHP Version: 8.1.14
 
@@ -69,13 +69,7 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id`, `user_id`, `title`, `description`, `deadline`, `priority`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Create a new task', 'Creating a new task', '2024-04-19 06:45:00', 'high', 'not-started', '2024-04-16 23:15:56', '2024-04-17 19:32:08'),
-(2, 1, 'Just another ', 'Task Do it faster ', '2024-04-20 20:14:00', 'very-low', 'in-progress', '2024-04-16 23:44:11', '2024-04-19 18:26:50'),
-(3, 1, 'One more task', 'One more task for us', '2024-04-26 06:37:00', 'medium', 'in-progress', '2024-04-17 22:07:59', '2024-04-20 21:43:57'),
-(4, 1, 'Let\'s create another task', 'This is our new task', '2024-04-29 10:00:00', 'low', 'completed', '2024-04-18 08:36:57', '2024-04-19 18:27:16'),
-(5, 1, 'Testing new task', 'testing new task', '2024-04-19 03:00:00', 'very-high', 'stopped', '2024-04-18 09:47:56', '2024-04-19 18:27:00'),
-(6, 1, 'Create a new task ', 'Added new features ', '2024-04-25 12:00:00', 'low', 'not-started', '2024-04-20 21:40:27', '2024-04-20 21:40:27'),
-(7, 1, 'Create a new task  attempt 2', 'Added new features attempt 2', '2024-04-27 12:00:00', 'high', 'not-started', '2024-04-20 21:41:31', '2024-04-20 21:41:31');
+(11, 1, 'Create a task ', 'Crate asd', '2024-04-26 12:00:00', 'high', 'not-started', '2024-04-21 16:37:34', '2024-04-21 16:57:29');
 
 -- --------------------------------------------------------
 
@@ -100,10 +94,24 @@ CREATE TABLE `task_assets` (
 --
 
 INSERT INTO `task_assets` (`id`, `task_id`, `location`, `caption`, `description`, `type`, `size`, `created_at`, `updated_at`) VALUES
-(1, 1, 'pexels-pixabay-415829.jpg', 'Testing again and again', 'Testing again and again', 'image/jpeg', 27504, '2024-04-20 20:46:03', '2024-04-20 20:46:03'),
-(2, 1, 'nature-light-plant-photography-sunlight-leaf-1393281-pxhere.com.jpg', 'Check this oout', 'Here is error', 'image/jpeg', 6522536, '2024-04-20 20:46:03', '2024-04-20 20:46:03'),
-(3, 7, 'wallpaperflare.com_wallpaper.jpg', 'This is new ', 'For testing purpose only ', 'image/jpeg', 173444, '2024-04-20 21:42:37', '2024-04-20 21:42:37'),
-(4, 7, 'picture.png', 'Let\'s see if it works', 'HA ga ga', 'image/png', 60325, '2024-04-20 21:42:37', '2024-04-20 21:42:37');
+(7, 11, '66254111af0ca_10-profile-picture-ideas-to-make-you-stand-out.jpg', 'dasd', 'dasdas', 'image/jpeg', 36844, '2024-04-21 16:38:41', '2024-04-21 16:38:41'),
+(8, 11, '66254111bd31d_nature-light-plant-photography-sunlight-leaf-1393281-pxhere.com.jpg', 'dsadas dasd ', 'dasdsa', 'image/jpeg', 6522536, '2024-04-21 16:38:41', '2024-04-21 16:38:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `task_comments`
+--
+
+CREATE TABLE `task_comments` (
+  `id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `parent_comment_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment_text` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -157,6 +165,15 @@ ALTER TABLE `task_assets`
   ADD KEY `task_id` (`task_id`);
 
 --
+-- Indexes for table `task_comments`
+--
+ALTER TABLE `task_comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `parent_comment_id` (`parent_comment_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -176,13 +193,19 @@ ALTER TABLE `profiles`
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `task_assets`
 --
 ALTER TABLE `task_assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `task_comments`
+--
+ALTER TABLE `task_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -211,6 +234,14 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `task_assets`
   ADD CONSTRAINT `task_assets_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`);
+
+--
+-- Constraints for table `task_comments`
+--
+ALTER TABLE `task_comments`
+  ADD CONSTRAINT `task_comments_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`),
+  ADD CONSTRAINT `task_comments_ibfk_2` FOREIGN KEY (`parent_comment_id`) REFERENCES `task_comments` (`id`),
+  ADD CONSTRAINT `task_comments_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

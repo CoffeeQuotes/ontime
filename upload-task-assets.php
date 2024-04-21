@@ -24,8 +24,8 @@ if($session->get("task_id")) {
 ?>
 <?php include 'partials/header.php'; ?>
 
-<p><?php echo $success??""; ?></p>
-<p><?php echo $failed??""; ?></p>
+<p class="success-alert"><?php echo $success??""; ?></p>
+<p class="error-alert"><?php echo $failed??""; ?></p>
 <form method="post" action="process-task-assets.php" enctype="multipart/form-data">
     <input type="hidden" name="task_id" value="<?= $task_id ?>">
 	<div id="uploadForm">

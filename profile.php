@@ -20,7 +20,7 @@ $statement->execute();
 $profile = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
 <?php include 'partials/header.php'; ?>
-	<div id="profile-wrapper">
+	<div id="profile-wrapper" class="center-50">
 		<div class="profile-box">
 			<div>
 				<div class="image-container">

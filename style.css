@@ -732,3 +732,26 @@ Utilize media queries to adjust styles for smaller screens.
     color: #333;
     font-weight: bold;
 }
+
+.center-50 {
+    width: 50%;
+    margin: 0 auto; /* This centers the div horizontally */
+}
+
+.success-alert {
+    color: var(--accent-color);
+    padding: 10px;
+    width: 320px;
+    margin: 10px auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.error-alert {
+    color: var(--error-color);
+    padding: 10px;
+    width: 320px;
+    margin: 10px auto;
+    border-radius: 10px;
+    text-align: center;
+}

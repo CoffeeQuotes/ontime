@@ -1,5 +1,5 @@
 <?php 
-					require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 use System\SessionManager;
 use System\Connection;
 $session = new SessionManager();
@@ -11,7 +11,7 @@ define('CONSTANTS', require 'constants.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// Check if any files were uploaded
 	$task_id = $_POST['task_id'];
-	
+	// print_r($_POST);die;	
 	if(isset($_FILES['location'])) {
 		// Loop through each uploaded file 
 	for($i=0; $i < count($_FILES['location']['name']); $i++) {

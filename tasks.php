@@ -32,8 +32,8 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include "partials/header.php"; ?>
 
-<p><?php echo $success??""; ?></p>
-<p><?php echo $failed??""; ?></p>
+<p class="success-alert"><?php echo $success??""; ?></p>
+<p class="error-alert"><?php echo $failed??""; ?></p>
 <div class="flex align-items-center justify-content-around">
     <h2 class="secondary-text">Your Task</h2>
     <a href="create-task.php">Create Task</a>
