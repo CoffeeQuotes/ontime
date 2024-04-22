@@ -32,23 +32,23 @@ $profile = $statement->fetch(PDO::FETCH_ASSOC);
 			</div>
 			<div>
 				<h1 id="aboutHeading" style="display: flex;"><?= $profile['firstname']??''?> <?= $profile['lastname']??'' ?> <sup class="secondary-text edit-head-icon" onclick="openModal()"><i class="fas fa-edit"></i></sup></h1>
-				<p class='secondary-text'><small>Designation:&nbsp;<?= $profile['designation']??'' ?></small></p>
+				<p><small>Designation:&nbsp;<?= $profile['designation']??'' ?></small></p>
 			</div>
 		</div>
 		<div class="profile-box">
 			<div>
-				<p class='secondary-text'><small>Email</small></p>
+				<p><small>Email</small></p>
 			</div>
 			<div>
-				<p class='secondary-text'><small><?= $session->get('logged_user')['email']??'' ?></small></p>		
+				<p><small><?= $session->get('logged_user')['email']??'' ?></small></p>		
 			</div>
 		</div>
 		<div class="profile-box">
 			<div>
-				<p class='secondary-text'><small>Phone</small></p>
+				<p><small>Phone</small></p>
 			</div>
 			<div>
-				<p class='secondary-text'><small><?= $session->get('logged_user')['phone']??'' ?></small></p>		
+				<p><small><?= $session->get('logged_user')['phone']??'' ?></small></p>		
 			</div>
 		</div>
 	</div>

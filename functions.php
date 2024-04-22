@@ -78,6 +78,40 @@ function displayComments($comments, $parentId = null) {
 
 
 
+function makeDateTimeHumanFriendly($dateTime) {
+    $timeAgo = strtotime($dateTime);
+    $currentTime = time();
+    $timeDifference = $currentTime - $timeAgo;
+    
+    // Define time intervals in seconds
+    $intervals = array(
+        1 => array('year', 31556926),
+        array('month', 2629744),
+        array('week', 604800),
+        array('day', 86400),
+        array('hour', 3600),
+        array('minute', 60),
+        array('second', 1)
+    );
+    
+    // Iterate over intervals
+    foreach ($intervals as $interval) {
+        $intervalName = $interval[0];
+        $intervalSeconds = $interval[1];
+        
+        // Calculate time difference in each interval
+        $difference = floor($timeDifference / $intervalSeconds);
+        
+        // If the difference is greater than 0
+        if ($difference >= 1) {
+            // Return human-friendly format
+            return $difference . ' ' . ($difference > 1 ? $intervalName . 's' : $intervalName) . ' ago';
+        }
+    }
+    
+    // If the difference is less than a second
+    return 'just now';
+}
 
 
 

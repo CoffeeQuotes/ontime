@@ -1,138 +1,50 @@
-/***
- * 
- * 
-Color Scheme:
-______________________________________
-Primary Color: #007bff (Blue)
-Secondary Color: #6c757d (Gray)
-Accent Color: #28a745 (Green)
-Error Color: #dc3545 (Red)
-Background Color: #f8f9fa (Light Gray)
-Text Color: #343a40 (Dark Gray)
-
-Typography:
-_______________________________________
-Font Family: Roboto, Arial, sans-serif
-Font Sizes:
-Heading 1: 36px
-Heading 2: 24px
-Heading 3: 18px
-Body: 16px
-Line Height: 1.5
-
-Buttons:
-______________________________________
-Primary Button:
-
-Background Color: Primary Color
-Text Color: White
-Padding: 10px 20px
-Border: None
-Border Radius: 5px
-***************************************
-Secondary Button:
-
-Background Color: Secondary Color
-Text Color: White
-Padding: 10px 20px
-Border: None
-Border Radius: 5px
-***************************************
-Forms:
-_______________________________________
-Input Fields:
-***************************************
-Background Color: White
-Border: 1px solid #ced4da (Light Gray)
-Border Radius: 3px
-Padding: 10px
-Font Size: 16px
-***************************************
-Error States:
-***************************************
-Input Border Color: Error Color
-***************************************
-Navigation:
-Header:
-***************************************
-Background Color: Primary Color
-Text Color: White
-Padding: 10px 20px
-***************************************
-Footer:
-_______________________________________
-Background Color: Secondary Color
-Text Color: White
-Padding: 10px 20px
-
-Alerts:
-_______________________________________
-Success Alert:
-***************************************
-Background Color: #d4edda (Light Green)
-Text Color: #155724 (Dark Green)
-Border: 1px solid #c3e6cb (Green)
-
-Error Alert:
-***************************************
-Background Color: #f8d7da (Light Red)
-Text Color: #721c24 (Dark Red)
-Border: 1px solid #f5c6cb (Red)
-
-General Styles:
-***************************************
-Box Shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
-Border Radius: 5px
-Width: Max-width: 1200px; Margin: 0 auto;
-
-Icons:
-****************************************
-Utilize Font Awesome icons for consistent iconography across the app.
-
-Mobile Responsiveness:
-_________________________________________
-Ensure all elements are responsive and adapt well to different screen sizes.
-Utilize media queries to adjust styles for smaller screens.
-
- * 
- * */
- @import url("normalize.css");
+@import url("normalize.css");
 
  :root {
-     --primary-color: #007bff;
-     --secondary-color: #6c757d;
-     --accent-color: #28a745;
-     --error-color: #dc3545;
-     --bg-color: #f8f9fa;
-     --text-color: #343a40;
+     --primary-color: #B6BA50;
+     --secondary-color: #A2DAAF;
+     --accent-color: #7ACBB0;
+     --error-color: #2f3139;
+     --bg-color: #F9FAF2;
+     --text-color: #070703;
  }
  
  /* body element */
  body {
-     font-family: 'Roboto', Arial, sans-serif;
-     font-size: 16px;
-     line-height: 1.5;
-     color: var(--text-color);
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
  }
  
  /* heading element */
- h1 {
-     font-size: 36px;
+ h1, h2 {
+    
+     font-family: inherit;
+     font-weight: 700;
+     line-height: 1.15;
+     letter-spacing: -0.022em;
      margin-bottom: 20px;
  }
  
- h2 {
-     font-size: 24px;
-     margin-bottom: 15px;
+ h1 {
+    margin-bottom: 20px;
  }
- 
+ h2 {
+    margin-bottom: 15px;
+ }
  /* Add styles for h3, h4, h5, h6 as necessary */
  
  /** Paragraphs and text elements */
  p {
+     font-size: 1rem;
      margin-bottom: 15px;
  }
- 
+ small {
+    font-size: 0.75rem;
+ }
  ul,
  ol {
      margin-bottom: 15px;
@@ -142,7 +54,7 @@ Utilize media queries to adjust styles for smaller screens.
  
  /** Links */
  a {
-     color: #007bff;
+     color: var(--text-color);
      text-decoration: none;
  }
  
@@ -153,21 +65,18 @@ Utilize media queries to adjust styles for smaller screens.
  /** Form */
  input,
  textarea {
-     font-family: 'Roboto', Arial, sans-serif;
-     font-size: 16px;
      padding: 10px;
      border: 1px solid #ced4da;
      border-radius: 3px;
  }
  
  button, .button {
-     font-family: 'Roboto', Arial, sans-serif;
-     font-size: 16px;
      padding: 10px 20px;
      border: none;
+     max-width: 160px;
      border-radius: 5px;
-     background-color: #007bff;
-     color: #fff;
+     background-color: var(--primary-color);
+     color: var(--bg-color);
      font-weight: 600;
      text-decoration: none;
  }
@@ -178,13 +87,13 @@ Utilize media queries to adjust styles for smaller screens.
  }
  
  .primary-button {
-     background-color: #007bff;
-     color: #fff;
+     background-color: var(--primary-color);
+     color: var(--bg-color);
  }
  
  .secondary-button {
-     background-color: #6c757d;
-     color: #fff;
+     background-color: var(--secondary-color);
+     color: var(--bg-color);
  }
  
  .success-button {
@@ -220,7 +129,7 @@ Utilize media queries to adjust styles for smaller screens.
  
  .task-form {
      width: 600px;
-     margin: 0 auto;
+     margin: 30px auto;
  }
  
  /** Form **/
@@ -235,7 +144,7 @@ Utilize media queries to adjust styles for smaller screens.
  #primary-header {
      display: flex;
      background-color: var(--bg-color);
-     /*    flex-direction: row;*/
+     border-bottom: 1px solid var(--text-color);
      flex-wrap: nowrap;
      justify-content: space-evenly;
  }
@@ -246,11 +155,12 @@ Utilize media queries to adjust styles for smaller screens.
  
  #primary-header>nav>a {
      margin: 0 20px;
+     color : var(--text-color)
  }
  
  #primary-header h1 {
      margin: 10px 20px;
-     color: var(--primary-color);
+     color: var(--text-color);
  }
  
  /*** Wrapper **/
@@ -272,8 +182,9 @@ Utilize media queries to adjust styles for smaller screens.
  footer {
      padding: 10px 20px;
      background-color: var(--bg-color);
-     color: var(--primary-color);
+     color: var(--text-color);
      display: flex;
+     border-top: 1px solid var(--text-color);
      flex-direction: row;
      justify-content: center;
  }
@@ -300,26 +211,31 @@ Utilize media queries to adjust styles for smaller screens.
 .priority-very-low {
     background-color: #d4edda; /* Light green */
     color: #155724; /* Dark green */
+    padding: 5px 10px;
 }
 
 .priority-low {
     background-color: #fff3cd; /* Light yellow */
     color: #664d03; /* Dark yellow */
+    padding: 5px 10px;
 }
 
 .priority-medium {
     background-color: #cce5ff; /* Light blue */
     color: #004085; /* Dark blue */
+    padding: 5px 10px;
 }
 
 .priority-high {
     background-color: #f8d7da; /* Light red */
     color: #721c24; /* Dark red */
+    padding: 5px 10px;
 }
 
 .priority-very-high {
     background-color: #f2f2f2; /* Light grey */
     color: #000; /* Black */
+    padding: 5px 10px;
 }
 
  
@@ -707,7 +623,7 @@ Utilize media queries to adjust styles for smaller screens.
     min-width: 20%; 
     margin: 10px;
     padding: 10px;
-    border-left: 4px dashed #ccc;
+    border-left: 4px dashed var(--accent-color);
 }
 
 
@@ -762,16 +678,14 @@ div.center-50 img {
     display: block; /* Ensure images don't overlap */
 }
 .parent_comment_box {
-    background-color: #f2f2f2;
     padding: 10px;
-    border: 1px solid var(--secondary-color);
+/*    border: 1px solid var(--secondary-color);*/
     margin-bottom: 10px;
 }
 .child_comment_box {
-    background-color: #eaeaea;
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    border: 1px solid var(--secondary-color);
+/*    border: 1px solid var(--secondary-color);*/
     margin-left: 20px; /* Adjust the margin-left as needed */
 }

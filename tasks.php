@@ -36,7 +36,7 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 <p class="success-alert"><?php echo $success??""; ?></p>
 <p class="error-alert"><?php echo $failed??""; ?></p>
 <div class="flex align-items-center justify-content-around">
-    <h2 class="secondary-text">Your Task</h2>
+    <h2>Your Task</h2>
     <a href="create-task.php">Create Task</a>
 </div>
 
@@ -46,8 +46,8 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
         <?php
 foreach ($tasks as $task): ?>
             <?php if ($task['status'] == 'not-started'): ?>
-                <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
-            <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
+                <div class="task p-10 mb-10" data-deadline="<?=strtotime($task['deadline']) ?>">
+            <a href="<?=CONSTANTS['site_url'] . 'show-task.php?task_id=' . $task['id'] ?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
             <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
             <p><?php echo createExcerpt($task["description"]); ?></p>
             <?php
@@ -82,8 +82,8 @@ endforeach; ?>
     <?php
 foreach ($tasks as $task): ?>
     <?php if ($task['status'] == 'in-progress'): ?>
-        <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
-        <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
+        <div class="task p-10 mb-10" data-deadline="<?=strtotime($task['deadline']) ?>">
+        <a href="<?=CONSTANTS['site_url'] . 'show-task.php?task_id=' . $task['id'] ?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
         <p><?php echo createExcerpt($task["description"]); ?></p> 
         <?php
@@ -117,10 +117,10 @@ endforeach; ?>
          <h2><i class="fas fa-check-circle"></i> Completed</h2>
     <?php foreach ($tasks as $task): ?>
         <?php if ($task['status'] == 'completed'): ?>
-            <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
+            <div class="task p-10 mb-10" data-deadline="<?=strtotime($task['deadline']) ?>">
 
             
-        <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
+        <a href="<?=CONSTANTS['site_url'] . 'show-task.php?task_id=' . $task['id'] ?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
         <p><?php echo createExcerpt($task["description"]); ?></p>
         <?php
@@ -155,8 +155,8 @@ endforeach; ?>
     <?php
 foreach ($tasks as $task): ?>
         <?php if ($task['status'] == 'stopped'): ?>
-            <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
-        <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
+            <div class="task p-10 mb-10" data-deadline="<?=strtotime($task['deadline']) ?>">
+        <a href="<?=CONSTANTS['site_url'] . 'show-task.php?task_id=' . $task['id'] ?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
         <p><?php echo createExcerpt($task["description"]); ?></p> 
         <?php

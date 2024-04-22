@@ -1,20 +1,18 @@
 <?php
-require 'vendor/autoload.php';
+require "vendor/autoload.php";
 use System\Connection;
 use System\SessionManager;
 
 $session = new SessionManager();
-require 'functions.php';
-if (!defined('CONSTANTS'))
-{
-    define('CONSTANTS', require 'constants.php');
+require "functions.php";
+if (!defined("CONSTANTS")) {
+    define("CONSTANTS", require "constants.php");
 }
-$task_id = isset($_GET['task_id']) ? intval($_GET['task_id']) : 0;
-if ($task_id === 0)
-{
+$task_id = isset($_GET["task_id"]) ? intval($_GET["task_id"]) : 0;
+if ($task_id === 0) {
     // Redirect to tasks
-    $session->set('failed', "Error: Task not found!");
-    header("Location: " . CONSTANTS['site_url'] . "tasks.php");
+    $session->set("failed", "Error: Task not found!");
+    header("Location: " . CONSTANTS["site_url"] . "tasks.php");
 }
 $pdo = Connection::getInstance();
 $sql = 'SELECT tasks.*, task_assets.caption, task_assets.location, task_assets.description as asset_description, task_assets.type, task_assets.size 
@@ -22,66 +20,75 @@ FROM tasks
 LEFT JOIN task_assets ON tasks.id = task_assets.task_id 
 WHERE tasks.id = :task_id;';
 $statement = $pdo->prepare($sql);
-$statement->bindValue(':task_id', $task_id, PDO::PARAM_INT);
+$statement->bindValue(":task_id", $task_id, PDO::PARAM_INT);
 $statement->execute();
 $task = $statement->fetchAll(PDO::FETCH_ASSOC);
-if (!count($task) > 0)
-{
-    $session->set('failed', "Error: Task not found.");
-    header("Location: " . CONSTANTS['site_url'] . "tasks.php");
+if (!count($task) > 0) {
+    $session->set("failed", "Error: Task not found.");
+    header("Location: " . CONSTANTS["site_url"] . "tasks.php");
 }
-$sql = 'SELECT task_comments.*, users.username  FROM task_comments LEFT JOIN users ON task_comments.user_id = users.id  WHERE task_id=:task_id ORDER BY updated_at DESC';    
+$sql =
+    "SELECT task_comments.*, users.username  FROM task_comments LEFT JOIN users ON task_comments.user_id = users.id  WHERE task_id=:task_id ORDER BY updated_at DESC";
 $statement = $pdo->prepare($sql);
-$statement->bindValue(':task_id', $task_id);
+$statement->bindValue(":task_id", $task_id);
 $statement->execute();
 $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
-<?php include 'partials/header.php'; ?>
+<?php include "partials/header.php"; ?>
     <div class="center-50">
-        <h2><?=$task[0]['title'] ?></h2>
-        <p><?=$task[0]['description'] ?></p> 
-        <p><small> <b>Task deadline : </b><i> <?=date("F j, Y, g:i a", strtotime($task[0]['deadline'])); ?></i></small> </p>   
-        <?php if ($task[0]['location'] && ($task[0]['type'] == 'image/jpeg' || $task[0]['type'] == 'image/png')): ?>
+        <h1><?= $task[0]["title"] ?></h1>
+        <p><?= $task[0]["description"] ?></p> 
+        <p><small> <b>Task deadline : </b><i> <?= date(
+            "F j, Y, g:i a",
+            strtotime($task[0]["deadline"])
+        ) ?></i></small> </p>   
+        <?php if (
+            $task[0]["location"] &&
+            ($task[0]["type"] == "image/jpeg" ||
+                $task[0]["type"] == "image/png")
+        ): ?>
         <h3>Assets</h3>
         <div class="pswp-gallery flex" id="gallery">
-        <?php
-    foreach ($task as $asset):
-        if ($asset['type'] == 'image/png' || $asset['type'] == 'image/jpeg'):
-            // Path to the image file
-            $uploadsDirectory = __DIR__ . '/uploads/';
-            $imageFilename = $asset['location'];;
-            // Construct the full path to the image
-            $imagePath = $uploadsDirectory . $imageFilename;
-            // Get the dimensions of the image
-            $imageSize = getimagesize($imagePath);
-            if ($imageSize !== false)
-            {
-                $width = $imageSize[0]; // Width of the image
-                $height = $imageSize[1]; // Height of the image
-                
-            }
-?>
+        <?php foreach ($task as $asset):
+            if (
+                $asset["type"] == "image/png" ||
+                $asset["type"] == "image/jpeg"
+            ):
+                // Path to the image file
+
+                $uploadsDirectory = __DIR__ . "/uploads/";
+                $imageFilename = $asset["location"]; // Construct the full path to the image
+                $imagePath = $uploadsDirectory . $imageFilename; // Get the dimensions of the image
+                $imageSize = getimagesize($imagePath);
+                if ($imageSize !== false) {
+                    $width = $imageSize[0];
+                    // Width of the image
+                    $height = $imageSize[1];
+                    // Height of the image
+                }
+                ?>
                 
                     <div class="pswp-gallery__item">
-                    <a href="<?php echo CONSTANTS['site_url'] . 'uploads/' . $asset['location']; ?>" data-pswp-width="<?=$width ?>"
-                    data-pswp-height="<?=$height ?>"
+                    <a href="<?php echo CONSTANTS["site_url"] .
+                        "uploads/" .
+                        $asset["location"]; ?>" data-pswp-width="<?= $width ?>"
+                    data-pswp-height="<?= $height ?>"
                     target="_blank">
-                        <img src="<?php echo CONSTANTS['site_url'] . 'uploads/' . $asset['location']; ?>" width="200"/>
+                        <img src="<?php echo CONSTANTS["site_url"] .
+                            "uploads/" .
+                            $asset["location"]; ?>" width="200"/>
                     </a>
                         <div class="pswp-caption-content">
-                            <h2><?=$asset['caption']; ?></h2>
-                            <p><?=$asset['asset_description']; ?></p>
+                            <h2><?= $asset["caption"] ?></h2>
+                            <p><?= $asset["asset_description"] ?></p>
                         </div>
                     </div>    
                   
         <?php
-        endif;
-    endforeach;
-?>
+            endif;
+        endforeach; ?>
         </div>  
-        <?php
-endif; ?>
+        <?php endif; ?>
 
 <h2>Comments</h2>
 <div>
@@ -207,4 +214,4 @@ endif; ?>
 var simplemde = new SimpleMDE({ element: document.getElementById("comment_text") });
 
 </script>
-<?php include 'partials/footer.php'; ?>
+<?php include "partials/footer.php"; ?>
