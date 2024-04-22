@@ -2,6 +2,7 @@
 require "vendor/autoload.php";
 use System\SessionManager;
 use System\Connection;
+require 'functions.php';
 $session = new SessionManager();
 // Define constants if not defined
 if (!defined('CONSTANTS')) {
@@ -46,9 +47,9 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($tasks as $task): ?>
             <?php if ($task['status'] == 'not-started'): ?>
                 <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
-            <h3><?php echo $task["title"]; ?></h3>    
+            <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
             <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-            <p><?php echo $task["description"]; ?></p>
+            <p><?php echo createExcerpt($task["description"]); ?></p>
             <?php
         $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
         $statement = $pdo->prepare($sql);
@@ -82,9 +83,9 @@ endforeach; ?>
 foreach ($tasks as $task): ?>
     <?php if ($task['status'] == 'in-progress'): ?>
         <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
-        <h3><?php echo $task["title"]; ?></h3>    
+        <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-        <p><?php echo $task["description"]; ?></p> 
+        <p><?php echo createExcerpt($task["description"]); ?></p> 
         <?php
         $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
         $statement = $pdo->prepare($sql);
@@ -119,9 +120,9 @@ endforeach; ?>
             <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
 
             
-        <h3><?php echo $task["title"]; ?></h3>    
+        <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-        <p><?php echo $task["description"]; ?></p>
+        <p><?php echo createExcerpt($task["description"]); ?></p>
         <?php
         $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
         $statement = $pdo->prepare($sql);
@@ -155,9 +156,9 @@ endforeach; ?>
 foreach ($tasks as $task): ?>
         <?php if ($task['status'] == 'stopped'): ?>
             <div class="task p-10 mb-10 priority-<?=$task['priority'] ?>" data-deadline="<?=strtotime($task['deadline']) ?>">
-        <h3><?php echo $task["title"]; ?></h3>    
+        <a href="<?= CONSTANTS['site_url'] . 'show-task.php?task_id='.$task['id']?>"><h3><?php echo createExcerpt($task["title"], 50); ?></h3></a>    
         <span class="priority-<?=$task["priority"] ?>"><small><?=str_replace("-", " ", strtoupper($task["priority"])) ?></small></span>
-        <p><?php echo $task["description"]; ?></p> 
+        <p><?php echo createExcerpt($task["description"]); ?></p> 
         <?php
         $sql = "SELECT * FROM task_assets WHERE task_id=:task_id ORDER BY updated_at ASC;";
         $statement = $pdo->prepare($sql);

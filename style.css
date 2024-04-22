@@ -755,3 +755,23 @@ Utilize media queries to adjust styles for smaller screens.
     border-radius: 10px;
     text-align: center;
 }
+
+div.center-50 img {
+    max-width: 100%; /* Ensure images don't exceed the width of their container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure images don't overlap */
+}
+.parent_comment_box {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    margin-bottom: 10px;
+}
+.child_comment_box {
+    background-color: #eaeaea;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--secondary-color);
+    margin-left: 20px; /* Adjust the margin-left as needed */
+}

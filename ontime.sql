@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 21, 2024 at 06:51 PM
+-- Generation Time: Apr 22, 2024 at 12:35 PM
 -- Server version: 10.6.12-MariaDB-1:10.6.12+maria~ubu2004-log
 -- PHP Version: 8.1.14
 
@@ -69,7 +69,7 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id`, `user_id`, `title`, `description`, `deadline`, `priority`, `status`, `created_at`, `updated_at`) VALUES
-(11, 1, 'Create a task ', 'Crate asd', '2024-04-26 12:00:00', 'high', 'not-started', '2024-04-21 16:37:34', '2024-04-21 16:57:29');
+(11, 1, 'Finding a needle in a haystack isn\'t hard when every straw is computerized.', 'I feel like a jigsaw puzzle missing a piece. And I\'m not even sure what the picture should be. I love Halloween. The one time of year when everyone wears a mask … not just me. I\'ve lived in darkness a long time. Over the years my eyes adjusted until the dark became my world and I could see.\n\n', '2024-04-26 12:00:00', 'high', 'not-started', '2024-04-21 16:37:34', '2024-04-21 21:17:37');
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,7 @@ CREATE TABLE `task_assets` (
   `task_id` int(11) NOT NULL,
   `location` varchar(255) NOT NULL,
   `caption` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `size` int(11) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
@@ -94,8 +94,8 @@ CREATE TABLE `task_assets` (
 --
 
 INSERT INTO `task_assets` (`id`, `task_id`, `location`, `caption`, `description`, `type`, `size`, `created_at`, `updated_at`) VALUES
-(7, 11, '66254111af0ca_10-profile-picture-ideas-to-make-you-stand-out.jpg', 'dasd', 'dasdas', 'image/jpeg', 36844, '2024-04-21 16:38:41', '2024-04-21 16:38:41'),
-(8, 11, '66254111bd31d_nature-light-plant-photography-sunlight-leaf-1393281-pxhere.com.jpg', 'dsadas dasd ', 'dasdsa', 'image/jpeg', 6522536, '2024-04-21 16:38:41', '2024-04-21 16:38:41');
+(7, 11, '66254111af0ca_10-profile-picture-ideas-to-make-you-stand-out.jpg', 'Leela, are you alright?', 'You know the worst thing about being a slave? They make you work, but they don\'t pay you or let you go. Oh, all right, I am. But if anything happens to me, tell them I died robbing some old man. Hey! I\'m a porno-dealing monster, what do I care what you think?', 'image/jpeg', 36844, '2024-04-21 16:38:41', '2024-04-21 20:52:35'),
+(8, 11, '66254111bd31d_nature-light-plant-photography-sunlight-leaf-1393281-pxhere.com.jpg', 'You got wanged on the head', 'Guards! Bring me the forms I need to fill out to have her taken away! Say it in Russian! Bender, being God isn\'t easy. If you do too much, people get dependent on you, and if you do nothing, they lose hope. You have to use a light touch. Like a safecracker, or a pickpocket.', 'image/jpeg', 6522536, '2024-04-21 16:38:41', '2024-04-21 20:52:52');
 
 -- --------------------------------------------------------
 
@@ -112,6 +112,18 @@ CREATE TABLE `task_comments` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `task_comments`
+--
+
+INSERT INTO `task_comments` (`id`, `task_id`, `parent_comment_id`, `user_id`, `comment_text`, `created_at`, `updated_at`) VALUES
+(1, 11, NULL, 1, 'Adding another comment to testing ', '2024-04-22 12:25:58', '2024-04-22 12:25:58'),
+(2, 11, 1, 1, 'New Comment to Adding another comment to testing\r\n', '2024-04-22 12:29:25', '2024-04-22 12:29:25'),
+(3, 11, NULL, 1, 'Totally new Comment ', '2024-04-22 12:29:54', '2024-04-22 12:29:54'),
+(4, 11, 3, 1, 'Adding new comment to Totally new Comment', '2024-04-22 12:31:26', '2024-04-22 12:31:26'),
+(5, 11, 3, 1, 'Adding new comment to Totally new Comment', '2024-04-22 12:31:45', '2024-04-22 12:31:45'),
+(6, 11, 1, 1, 'Testing With another comment !', '2024-04-22 12:33:51', '2024-04-22 12:33:51');
 
 -- --------------------------------------------------------
 
@@ -205,7 +217,7 @@ ALTER TABLE `task_assets`
 -- AUTO_INCREMENT for table `task_comments`
 --
 ALTER TABLE `task_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

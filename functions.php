@@ -24,7 +24,57 @@ function validateAndFormatDateTime($dateString) {
     }
 }
 
+// Make Excerpt 
+function createExcerpt($text, $maxLength = 100, $ellipsis = '...') {
+    // Remove HTML tags and trim whitespace
+    $text = strip_tags($text);
+    $text = trim($text);
 
+    // If the text length is less than or equal to the maximum length, return the original text
+    if (mb_strlen($text) <= $maxLength) {
+        return $text;
+    }
+
+    // Truncate the text to the maximum length and append the ellipsis
+    $excerpt = mb_substr($text, 0, $maxLength - mb_strlen($ellipsis)) . $ellipsis;
+
+    // Trim whitespace again to ensure clean output
+    $excerpt = trim($excerpt);
+
+    return $excerpt;
+}
+
+function displayComments($comments, $parentId = null) {
+    // Filter comments based on parent_comment_id
+    $filteredComments = array_filter($comments, function($comment) use ($parentId) {
+        return $comment['parent_comment_id'] == $parentId;
+    });
+
+    // If there are no comments for the given parent_id, return
+    if (empty($filteredComments)) {
+        return;
+    }
+
+    // Iterate through filtered comments and display them
+    foreach ($filteredComments as $comment) {
+        echo '<div class="comment">';
+        echo '<b>' . htmlspecialchars($comment['username']) . ' says:</b>';
+        echo '<div>' . htmlspecialchars($comment['comment_text']) . '</div>';
+        echo '<div class="reply-link"><a href="javascript:void(0)" class="replyView">Reply</a></div>';
+        echo '<div class="reply-form" style="display: none;">';
+        echo '<form class="replyForm">';
+        echo '<input type="hidden" class="parentCommentId" value="' . $comment["id"] . '">';
+        echo '<textarea class="replyText" style="width: 100%;"></textarea>';
+        echo '<button type="button" class="postReply">Post Reply</button>';
+        echo '</form>';
+        echo '</div>';
+
+        // Recursively display nested comments
+        displayComments($comments, $comment['id']);
+
+        echo '</div>';
+    }
+}
 
 
 
