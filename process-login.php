@@ -79,7 +79,25 @@ if (!empty($errors)) {
  	'updated_at' => $user['updated_at'],
  ];
 
+
 $session->set('logged_user', $logged_user);
+
+// Check if user has completed his profile or not 
+$sql = "SELECT * FROM profiles WHERE user_id=:user_id LIMIT 1";
+$statement = $pdo->prepare($sql);
+$statement->bindValue(':user_id', $session->get('logged_user')['id']);
+$statement->execute();
+
+if ($statement->rowCount() > 0) {
+    $usr_profile = $statement->fetch(PDO::FETCH_ASSOC);
+    if ($usr_profile['firstname'] === '' || $usr_profile['middlename'] === '' || $usr_profile['lastname'] === '' || $usr_profile['picture'] === '' || $usr_profile['designation'] === '') { // <-- Added comparison for designation
+        $session->set('profile_incomplete', true);
+    }
+} else {
+        $session->set('profile_incomplete', true);
+}
+
+    
 $session->set('success', "Welcome back!");
 // Redirect to success page or any other appropriate page
 header("Location: ".CONSTANTS['site_url']."tasks.php");

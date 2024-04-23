@@ -19,7 +19,7 @@
 </head>
 <body>
 	<header id="primary-header">
-		<h2>Ontime</h1>
+		<h2>Ontime</h2>
 		<nav>
 			<?php 
 				if($session->get('logged_user')) {		

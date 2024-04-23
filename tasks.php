@@ -11,6 +11,10 @@ if (!defined('CONSTANTS')) {
 if (!$session->get('logged_user')) {
     header("Location: " . CONSTANTS['site_url'] . "login.php");
 }
+
+if($session->get('profile_incomplete')) {
+    header("Location: " . CONSTANTS['site_url'] . "complete-profile.php");
+}
 $pdo = Connection::getInstance();
 if ($session->get("success")) {
     $success = $session->get("success");
@@ -20,7 +24,9 @@ if ($session->get("failed")) {
     $failed = $session->get("failed");
     $session->delete("failed");
 }
+
 $user_id = $session->get("logged_user") ["id"];
+
 $sql = "SELECT * FROM tasks WHERE user_id=:user_id ORDER BY updated_at DESC;"; // Later have to update it for filters and sorting
 $statement = $pdo->prepare($sql);
 $statement->bindValue(":user_id", $user_id);

@@ -8,6 +8,12 @@ require "functions.php";
 if (!defined("CONSTANTS")) {
     define("CONSTANTS", require "constants.php");
 }
+if(!$session->get('logged_user')) {
+    header("Location: ".CONSTANTS['site_url']."login.php");
+}
+if($session->get('profile_incomplete')) {
+    header("Location: " . CONSTANTS['site_url'] . "complete-profile.php");
+}
 $task_id = isset($_GET["task_id"]) ? intval($_GET["task_id"]) : 0;
 if ($task_id === 0) {
     // Redirect to tasks

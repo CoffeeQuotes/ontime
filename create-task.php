@@ -10,6 +10,9 @@ if (!defined('CONSTANTS')) {
 if(!$session->get('logged_user')) {
 	header("Location: ".CONSTANTS['site_url']."login.php");
 }
+if($session->get('profile_incomplete')) {
+    header("Location: " . CONSTANTS['site_url'] . "complete-profile.php");
+}
 if($session->get('errors')) {
 	$errors = $session->get('errors');
 	$session->delete('errors');

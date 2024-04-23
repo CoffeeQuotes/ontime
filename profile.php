@@ -11,6 +11,9 @@ if (!defined('CONSTANTS')) {
 if(!$session->get('logged_user')) {
 	header("Location: ".CONSTANTS['site_url']."login.php");
 }
+if($session->get('profile_incomplete')) {
+    header("Location: " . CONSTANTS['site_url'] . "complete-profile.php");
+}
 $pdo = Connection::getInstance();
 $sql = 'SELECT * FROM profiles WHERE user_id=:user_id';
 $user_id = $session->get('logged_user')['id'];

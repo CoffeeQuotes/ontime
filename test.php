@@ -12,13 +12,6 @@ if (!defined('CONSTANTS')) {
 if(!$session->get('logged_user')) {
     header("Location: ".CONSTANTS['site_url']."login.php");
 }
-if ($session->get("success")) {
-    $success = $session->get("success");
-    $session->delete("success");
-}
-if($session->get("profile_incomplete")) {
-    $failed = "Please complete your profile.";
-}
 $user = $session->get('logged_user');   
 $errors = [];
 
@@ -27,8 +20,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pdo = Connection::getInstance();
 
     // Check if a file was uploaded
-    if (isset($_FILES['cropped_image'])) {
-        $file = $_FILES['cropped_image'];
+    if (isset($_FILES['picture'])) {
+        $file = $_FILES['picture'];
 
         // Specify the directory to save the uploaded image
         $uploadDir = 'uploads/';
@@ -50,12 +43,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $statement->bindValue(':picture', $fileName);
     $statement->bindValue(':designation', $designation);
     $statement->execute();
-    // If successful, return the location URL
-    exit;
+    header("Location: " . CONSTANTS["site_url"] . "tasks.php");
 }
 ?>
 <?php include 'partials/header.php' ?>
-<p class="error-alert"><?php echo $failed??""; ?></p>
 <form method="post" action="" class="task-form" enctype="multipart/form-data">
     <fieldset>
         <legend>Create Profile</legend>
@@ -78,7 +69,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="form-row">
             <label for="picture_field">Upload Picture</label>
-            <input type="file" name="picture" accept="image/jpeg" id="picture_field" />
+            <input type="file" name="picture" accept="image/*" id="picture_field" />
             <!-- Add error handling for picture here -->
             <div id="image-preview">&nbsp;&nbsp;</div>
         </div>
@@ -103,19 +94,20 @@ image.addEventListener('change', function () {
     var reader = new FileReader();
 
     reader.onload = function (e) {
+        console.log('FileReader loaded:', e);
         var img = new Image();
         img.src = e.target.result;
         img.onload = function () {
+            console.log('Image loaded');
             preview.innerHTML = '';
             preview.appendChild(img);
 
             // Initialize Cropper
-            cropper = new Cropper(img, { 
+            var cropper = new Cropper(img, { 
                 aspectRatio: 1,
-                viewMode: 1,
-                autoCropArea: 1,
-                minCropBoxWidth: 150,
-                minCropBoxHeight: 150,
+                viewMode: 2,
+                minCropBoxWidth: 200,
+                minCropBoxHeight: 200,
                 ready: function () {
                     cropper.crop();
                 },
@@ -124,41 +116,24 @@ image.addEventListener('change', function () {
     };
     reader.readAsDataURL(file);
 });
-
 document.querySelector('.task-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     // Get the cropped image data
     var canvas = cropper.getCroppedCanvas();
-    if (!canvas) {
-        // Handle case when no crop has been made
-        alert('Please crop the image before submitting.');
-        return;
-    }
-    // Convert canvas to blob
-    canvas.toBlob(function(blob) {
-        // Create FormData object and append the blob
-        var formData = new FormData();
-        formData.append('cropped_image', blob, 'profile-image.jpg');
+    var croppedImageData = canvas.toDataURL();
 
-        // Append other form data
-        var inputs = document.querySelectorAll('.task-form input:not(#picture_field)');
-        inputs.forEach(function(input) {
-            formData.append(input.name, input.value);
-        });
+    // Create a hidden input field to store the cropped image data
+    var hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'cropped_image';
+    hiddenInput.value = croppedImageData;
 
-        // Submit the form with AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                window.location.href = "<?= CONSTANTS['site_url'].'tasks.php'?>"; // Redirect to the URL specified in the response
-            } else {
-                alert('Error uploading image. Please try again.');
-            }
-        };
-        xhr.send(formData);
-    }, 'image/jpeg'); // Adjust format as needed
+    // Append the hidden input field to the form
+    this.appendChild(hiddenInput);
+
+    // Submit the form
+    this.submit();
 });
 
 </script>
