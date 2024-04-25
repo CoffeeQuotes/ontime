@@ -7,4 +7,5 @@ define('CONSTANTS', require 'constants.php');
 }
 $session = new SessionManager();
 $session->delete("logged_user");
+$session->delete('profile_incomplete');
 header("Location: " . CONSTANTS["site_url"] . "login.php");

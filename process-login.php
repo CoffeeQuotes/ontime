@@ -90,7 +90,7 @@ $statement->execute();
 
 if ($statement->rowCount() > 0) {
     $usr_profile = $statement->fetch(PDO::FETCH_ASSOC);
-    if ($usr_profile['firstname'] === '' || $usr_profile['middlename'] === '' || $usr_profile['lastname'] === '' || $usr_profile['picture'] === '' || $usr_profile['designation'] === '') { // <-- Added comparison for designation
+    if ($usr_profile['firstname'] === '' || $usr_profile['lastname'] === '' || $usr_profile['picture'] === '' || $usr_profile['designation'] === '') { 
         $session->set('profile_incomplete', true);
     }
 } else {

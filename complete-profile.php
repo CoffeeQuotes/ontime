@@ -51,6 +51,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $statement->bindValue(':designation', $designation);
     $statement->execute();
     // If successful, return the location URL
+    $session->delete('profile_incomplete');
     exit;
 }
 ?>
@@ -80,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="picture_field">Upload Picture</label>
             <input type="file" name="picture" accept="image/jpeg" id="picture_field" />
             <!-- Add error handling for picture here -->
-            <div id="image-preview">&nbsp;&nbsp;</div>
+            <div id="image-preview" style="max-width: 600px; max-height: 600px;">&nbsp;&nbsp;</div>
         </div>
         <div class="form-row">
             <label for="designation_field">Enter Designation</label>
@@ -114,6 +115,7 @@ image.addEventListener('change', function () {
                 aspectRatio: 1,
                 viewMode: 1,
                 autoCropArea: 1,
+                // zoomable: false, // Enable zooming
                 minCropBoxWidth: 150,
                 minCropBoxHeight: 150,
                 ready: function () {
@@ -129,7 +131,10 @@ document.querySelector('.task-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     // Get the cropped image data
-    var canvas = cropper.getCroppedCanvas();
+    var canvas = cropper.getCroppedCanvas({
+        width: 200, // Set desired width
+        height: 200, // Set desired height
+    });
     if (!canvas) {
         // Handle case when no crop has been made
         alert('Please crop the image before submitting.');

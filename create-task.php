@@ -72,28 +72,14 @@ $user = $session->get('logged_user');
             </select>
         </div>
         <div class="form-row">
-            <input type="submit" value="Create Task"/>
+            <input class="button" type="submit" value="Create Task"/>
         </div>
     </fieldset>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script type="text/javascript">
-   // Get the current date and time
-    // var now = new Date();
-
-    // // Format the date and time as a string suitable for the value attribute of the input element
-    // var year = now.getFullYear();
-    // var month = ('0' + (now.getMonth() + 1)).slice(-2);
-    // var day = ('0' + now.getDate()).slice(-2);
-    // var hours = ('0' + now.getHours()).slice(-2);
-    // var minutes = ('0' + now.getMinutes()).slice(-2);
-    // var currentDateTime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
-
-    // // Set the minimum attribute of the input element to the current date and time
-    // document.getElementById('deadline_field').setAttribute('min', currentDateTime);
-    // Initialize Flatpickr on the deadline_field input
-flatpickr('#deadline_field', {
+ flatpickr('#deadline_field', {
     enableTime: true, // Enable time selection
     dateFormat: 'Y-m-d H:i', // Date format
     time_24hr: true, // Use 24-hour time format
