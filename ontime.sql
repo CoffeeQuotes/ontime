@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 26, 2024 at 01:20 AM
+-- Generation Time: Apr 26, 2024 at 07:12 PM
 -- Server version: 10.6.12-MariaDB-1:10.6.12+maria~ubu2004-log
 -- PHP Version: 8.1.14
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `ontime`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `category_name` varchar(255) NOT NULL,
+  `category_slug` varchar(255) NOT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` int(11) NOT NULL,
+  `client_name` varchar(255) NOT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -50,12 +79,33 @@ INSERT INTO `profiles` (`id`, `user_id`, `firstname`, `middlename`, `lastname`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL,
+  `project_name` varchar(255) NOT NULL,
+  `project_description` text DEFAULT NULL,
+  `status` enum('not-started','in-progress','stopped','completed') DEFAULT 'not-started',
+  `project_manager_id` int(11) NOT NULL,
+  `priority` enum('very-low','low','medium','high','very-high') DEFAULT 'very-low',
+  `budget` varchar(255) DEFAULT NULL,
+  `client_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tasks`
 --
 
 CREATE TABLE `tasks` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `deadline` datetime DEFAULT current_timestamp(),
@@ -70,8 +120,9 @@ CREATE TABLE `tasks` (
 -- Dumping data for table `tasks`
 --
 
-INSERT INTO `tasks` (`id`, `user_id`, `title`, `description`, `deadline`, `priority`, `public`, `status`, `created_at`, `updated_at`) VALUES
-(11, 1, 'Finding a needle in a haystack isn\'t hard when every straw is computerized.', 'I feel like a jigsaw puzzle missing a piece. And I\'m not even sure what the picture should be. I love Halloween. The one time of year when everyone wears a mask … not just me. I\'ve lived in darkness a long time. Over the years my eyes adjusted until the dark became my world and I could see.\n\n', '2024-04-26 12:00:00', 'high', 1, 'completed', '2024-04-21 16:37:34', '2024-04-22 19:08:16');
+INSERT INTO `tasks` (`id`, `user_id`, `project_id`, `title`, `description`, `deadline`, `priority`, `public`, `status`, `created_at`, `updated_at`) VALUES
+(11, 1, NULL, 'Finding a needle in a haystack isn\'t hard when every straw is computerized.', 'I feel like a jigsaw puzzle missing a piece. And I\'m not even sure what the picture should be. I love Halloween. The one time of year when everyone wears a mask … not just me. I\'ve lived in darkness a long time. Over the years my eyes adjusted until the dark became my world and I could see.\n\n', '2024-04-26 12:00:00', 'high', 1, 'completed', '2024-04-21 16:37:34', '2024-04-22 19:08:16'),
+(12, 1, NULL, 'Finding a needle in a haystack isn\'t hard when every straw is computerized.', 'I feel like a jigsaw puzzle missing a piece. And I\'m not even sure what the picture should be. I love Halloween. The one time of year when everyone wears a mask … not just me. I\'ve lived in darkness a long time. Over the years my eyes adjusted until the dark became my world and I could see.\r\n\r\n', '2024-04-26 12:00:00', 'high', 1, 'completed', '2024-04-21 16:37:34', '2024-04-22 19:08:16');
 
 -- --------------------------------------------------------
 
@@ -162,6 +213,18 @@ INSERT INTO `users` (`id`, `username`, `email`, `phone`, `password`, `email_veri
 --
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `profiles`
 --
 ALTER TABLE `profiles`
@@ -169,11 +232,21 @@ ALTER TABLE `profiles`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `client_id` (`client_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `project_manager_id` (`project_manager_id`);
+
+--
 -- Indexes for table `tasks`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id` (`user_id`);
+  ADD KEY `fk_user_id` (`user_id`),
+  ADD KEY `project_id_key` (`project_id`);
 
 --
 -- Indexes for table `task_assets`
@@ -202,16 +275,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `profiles`
 --
 ALTER TABLE `profiles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `task_assets`
@@ -242,10 +333,19 @@ ALTER TABLE `profiles`
   ADD CONSTRAINT `profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `projects`
+--
+ALTER TABLE `projects`
+  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
+  ADD CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `projects_ibfk_3` FOREIGN KEY (`project_manager_id`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `project_id_key` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
 
 --
 -- Constraints for table `task_assets`
