@@ -31,6 +31,7 @@ $user = $session->get('logged_user');
             <input type="hidden" name="user_id" value="<?= $user['id']; ?>"/>
             <label for="title_field">Title</label>
             <input type="text" name="title" id="title_field" placeholder="Enter title"/>
+            <span class="error">
             <?php 
                 if(isset($errors['title'])) {
                     foreach($errors['title'] as $error) {
@@ -38,10 +39,12 @@ $user = $session->get('logged_user');
                     }
                 }
             ?>
+            </span>
         </div>
         <div class="form-row">
             <label for="description_field">Description</label>
             <textarea name="description" id="description_field"></textarea>
+            <span class="error">
             <?php 
                 if(isset($errors['description'])) {
                     foreach($errors['description'] as $error) {
@@ -49,10 +52,12 @@ $user = $session->get('logged_user');
                     }
                 }
             ?>
+            </span>
         </div>
         <div class="form-row">
             <label for="deadline_field">Deadline</label>
         	<input type="text" name="deadline" id="deadline_field" placeholder="Select deadline"/>
+            <span class="error">
             <?php 
                 if(isset($errors['deadline'])) {
                     foreach($errors['deadline'] as $error) {
@@ -60,6 +65,7 @@ $user = $session->get('logged_user');
                     }
                 }
             ?>
+            </span>
         </div>
         <div class="form-row">
             <label for="priority_field">Priority</label>
@@ -88,6 +94,7 @@ $user = $session->get('logged_user');
     altFormat: 'F j, Y H:i', // Format for displaying the selected date and time
     placeholder: 'Select deadline', // Placeholder text
 });
+var simplemde = new SimpleMDE({ element: document.getElementById("description_field") });
 
 </script>
 <?php include 'partials/footer.php' ?>

@@ -4,7 +4,7 @@
      --primary-color: #B6BA50;
      --secondary-color: #A2DAAF;
      --accent-color: #7ACBB0;
-     --error-color: #2f3139;
+     --error-color: #B93532;
      --bg-color: #F9FAF2;
      --text-color: #070703;
  }
@@ -127,7 +127,7 @@
  }
  
  
- .task-form {
+ .task-form, .upload-task-form {
      width: 600px;
      margin: 30px auto;
  }
@@ -689,3 +689,40 @@ div.center-50 img {
 /*    border: 1px solid var(--secondary-color);*/
     margin-left: 20px; /* Adjust the margin-left as needed */
 }
+
+select {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Add custom styles only for modern browsers that support appearance */
+  @supports (appearance: none) or (-moz-appearance: none) {
+    select {
+      appearance: none; /* Remove default arrow */
+      -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
+      -moz-appearance: none; /* Remove default arrow on Mozilla Firefox */
+    }
+  }
+  
+  /* Add custom arrow icon for select elements */
+  select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%23333" d="M9.3 4.3L6 7.6 2.7 4.3C2.3 3.9 1.7 3.9 1.3 4.3s-.4 1-.1 1.4l4 4c.2.2.4.3.7.3s.5-.1.7-.3l4-4c.3-.4.3-1.1-.1-1.4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    padding-right: 24px; /* Adjust padding to accommodate the icon */
+  }
+  
+  /* Hide arrow icon in IE */
+  select::-ms-expand {
+    display: none;
+  }
+  
+  .error {
+    color: var(--error-color);
+  }

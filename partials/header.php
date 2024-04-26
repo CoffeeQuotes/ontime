@@ -25,7 +25,7 @@
 			<?php 
 				if($session->get('logged_user')) {		
 			?> 
-			<a href="tasks.php">Tasks</a>
+			<a href="tasks.php"><i class="far fa-check-circle"></i>&nbsp;Tasks</a>
 			<a href="profile.php">
     			<i class="fa fa-user"></i>
     			&nbsp;@<?= $session->get('logged_user')['username']; ?>
