@@ -629,6 +629,14 @@ input[type=button] {
 }
 
 /*** Margin & Padding**/
+.mt-10 {
+    margin-top: 10px;
+}
+
+.my-50 {
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+}
 
 .mb-10 {
     margin-bottom: 10px;

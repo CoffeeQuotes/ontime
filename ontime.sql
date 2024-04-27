@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 26, 2024 at 07:12 PM
+-- Generation Time: Apr 27, 2024 at 09:46 PM
 -- Server version: 10.6.12-MariaDB-1:10.6.12+maria~ubu2004-log
 -- PHP Version: 8.1.14
 
@@ -36,6 +36,17 @@ CREATE TABLE `categories` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `category_name`, `category_slug`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Marketing', 'marketing', 'active', '2024-04-27 19:47:48', '2024-04-27 19:47:48'),
+(2, 'Technology', 'technology', 'active', '2024-04-27 20:00:20', '2024-04-27 20:00:20'),
+(3, 'Medical', 'medical', 'active', '2024-04-27 20:11:55', '2024-04-27 20:11:55'),
+(4, 'Government', 'government', 'active', '2024-04-27 20:15:47', '2024-04-27 20:15:47'),
+(5, 'Travel', 'travel', 'active', '2024-04-27 21:03:50', '2024-04-27 21:03:50');
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +60,16 @@ CREATE TABLE `clients` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`id`, `client_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Jana Match Industries', 'active', '2024-04-27 21:35:54', '2024-04-27 21:35:54'),
+(2, 'CIPLA LTD.', 'active', '2024-04-27 21:39:46', '2024-04-27 21:39:46'),
+(3, 'Domino`s', 'active', '2024-04-27 21:41:41', '2024-04-27 21:41:41'),
+(4, 'BOROSIL', 'active', '2024-04-27 21:42:44', '2024-04-27 21:42:44');
 
 -- --------------------------------------------------------
 
@@ -74,7 +95,7 @@ CREATE TABLE `profiles` (
 
 INSERT INTO `profiles` (`id`, `user_id`, `firstname`, `middlename`, `lastname`, `picture`, `designation`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Shishir', '', 'Kumar', '6621acc5e7562_profile-image.jpg', 'Software Engineer', '2024-04-18 11:24:37', '2024-04-18 23:29:09'),
-(16, 2, 'Ashwani', '', 'Kumar', '662afb76d06bc_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-26 00:55:18');
+(16, 2, 'Ashwani', '', 'Kumar', '662afb76d06bc_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-27 17:28:23');
 
 -- --------------------------------------------------------
 
@@ -278,13 +299,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `profiles`
