@@ -28,14 +28,25 @@ if ($session->get("failed")) {
 
 $user_id = $session->get("logged_user")["id"];
 
-$sql = "SELECT * FROM tasks WHERE user_id=:user_id ORDER BY updated_at DESC;"; // Later have to update it for filters and sorting
-$statement = $pdo->prepare($sql);
+$project_id = $_GET['project_id'] ?? '';
+if ($project_id == '') {
+    $sql = "SELECT * FROM tasks WHERE user_id=:user_id ORDER BY updated_at DESC;"; // Later have to update it for filters and sorting
+    $statement = $pdo->prepare($sql);
+} else {
+    $sql = "SELECT * FROM tasks WHERE user_id=:user_id AND project_id=:project_id ORDER BY updated_at DESC;"; // Later have to update it for filters and sorting
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(':project_id', $project_id);
+}
 $statement->bindValue(":user_id", $user_id);
 $statement->execute();
 $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 // echo "<pre>";
 // print_r($tasks);
 
+$sql = "SELECT * FROM projects ORDER BY updated_at DESC";
+$statement = $pdo->prepare($sql);
+$statement->execute();
+$projects = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php include "partials/header.php"; ?>
@@ -45,6 +56,14 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 <div class="flex align-items-center justify-content-around">
     <h2>Your Task</h2>
     <a href="create-task.php">Create Task</a>
+    <select name="project_id" id="project_id">
+        <option value="" <?php echo ($project_id == '') ? 'selected' : ''; ?> disabled>Select Projects </option>
+        <?php foreach ($projects as $project): ?>
+            <option value="<?= $project['id'] ?>" <?php echo ($project_id == $project['id']) ? 'selected' : ''; ?>>
+                <?= $project['project_name'] ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
 </div>
 
 <div class="flex justify-content-around">
@@ -306,6 +325,30 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
                 }
             }, 1000); // Update every second
         });
+    });
+
+
+    // Project Selected %
+    document.getElementById("project_id").addEventListener("change", function (event) {
+        // Get project Id 
+        project_id = this.value;
+        // alert(project_id);
+        // change the url with new project_id 
+        // Assuming the URL is in the format "http://example.com/page?project_id=value"
+        var currentUrl = window.location.href;
+        var newUrl;
+
+        // Check if the URL already has a query string
+        if (currentUrl.indexOf('?') !== -1) {
+            // URL already has a query string
+            newUrl = currentUrl.replace(/(project_id=)[^\&]+/, '$1' + project_id);
+        } else {
+            // URL doesn't have a query string
+            newUrl = currentUrl + '?project_id=' + project_id;
+        }
+
+        // Redirect to the new URL
+        window.location.href = newUrl;
     });
 
 </script>

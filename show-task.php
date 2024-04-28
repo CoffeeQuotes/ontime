@@ -197,8 +197,11 @@ $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
         loadComment();
 
         function loadComment() {
+            task_id = document.getElementById('task_id').value;
+            data = { task_id: task_id };
             fetch('fetch-task-comment.php', {
-                method: 'POST'
+                method: 'POST',
+                body: JSON.stringify(data)
             })
                 .then(response => response.text())
                 .then(data => {

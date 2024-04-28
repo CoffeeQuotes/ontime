@@ -4,7 +4,8 @@ use System\Connection;
 
 $pdo = Connection::getInstance();
 require 'functions.php';
-$task_id = 11;
+$data = json_decode(file_get_contents('php://input'), true);
+$task_id = $data['task_id'];
 $sql = 'SELECT task_comments.*, users.username, profiles.firstname , profiles.lastname , profiles.picture , profiles.designation  FROM task_comments LEFT JOIN users ON task_comments.user_id = users.id LEFT JOIN profiles ON users.id = profiles.user_id WHERE task_id=:task_id AND parent_comment_id IS NULL ORDER BY updated_at DESC';
 
 $statement = $pdo->prepare($sql);

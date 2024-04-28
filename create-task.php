@@ -1,70 +1,86 @@
-<?php 
+<?php
 // require 'SessionManager.php';
 require 'vendor/autoload.php';
 use System\SessionManager;
+use System\Connection;
+
+$pdo = Connection::getInstance();
+
 $session = new SessionManager();
 // Define constants if not defined
 if (!defined('CONSTANTS')) {
     define('CONSTANTS', require 'constants.php');
 }
-if(!$session->get('logged_user')) {
-	header("Location: ".CONSTANTS['site_url']."login.php");
+if (!$session->get('logged_user')) {
+    header("Location: " . CONSTANTS['site_url'] . "login.php");
 }
-if($session->get('profile_incomplete')) {
+if ($session->get('profile_incomplete')) {
     header("Location: " . CONSTANTS['site_url'] . "complete-profile.php");
 }
-if($session->get('errors')) {
-	$errors = $session->get('errors');
-	$session->delete('errors');
+if ($session->get('errors')) {
+    $errors = $session->get('errors');
+    $session->delete('errors');
 }
 
-$user = $session->get('logged_user'); 
+$user = $session->get('logged_user');
 // print_r($user);
-
+$sql = "SELECT * FROM projects ORDER BY updated_at DESC;";
+$statement = $pdo->prepare($sql);
+$statement->execute();
+$projects = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php include 'partials/header.php' ?>
-<p><?php echo $errors['failed']??''; ?></p>
+<p><?php echo $errors['failed'] ?? ''; ?></p>
 <form method="post" action="process-task.php" class="task-form">
     <fieldset>
         <legend>Create a task</legend>
         <div class="form-row">
-            <input type="hidden" name="user_id" value="<?= $user['id']; ?>"/>
+            <label>Project</label>
+            <select name="project_id" id="project_id">
+                <option value="" selected disabled>Select Project</option>
+                <?php foreach ($projects as $project): ?>
+                    <option value="<?= $project['id']; ?>"><?= $project['project_name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-row">
+            <input type="hidden" name="user_id" value="<?= $user['id']; ?>" />
             <label for="title_field">Title</label>
-            <input type="text" name="title" id="title_field" placeholder="Enter title"/>
+            <input type="text" name="title" id="title_field" placeholder="Enter title" />
             <span class="error">
-            <?php 
-                if(isset($errors['title'])) {
-                    foreach($errors['title'] as $error) {
+                <?php
+                if (isset($errors['title'])) {
+                    foreach ($errors['title'] as $error) {
                         echo $error . "<br />";
                     }
                 }
-            ?>
+                ?>
             </span>
         </div>
         <div class="form-row">
             <label for="description_field">Description</label>
             <textarea name="description" id="description_field"></textarea>
             <span class="error">
-            <?php 
-                if(isset($errors['description'])) {
-                    foreach($errors['description'] as $error) {
+                <?php
+                if (isset($errors['description'])) {
+                    foreach ($errors['description'] as $error) {
                         echo $error . "<br />";
                     }
                 }
-            ?>
+                ?>
             </span>
         </div>
         <div class="form-row">
             <label for="deadline_field">Deadline</label>
-        	<input type="text" name="deadline" id="deadline_field" placeholder="Select deadline"/>
+            <input type="text" name="deadline" id="deadline_field" placeholder="Select deadline" />
             <span class="error">
-            <?php 
-                if(isset($errors['deadline'])) {
-                    foreach($errors['deadline'] as $error) {
+                <?php
+                if (isset($errors['deadline'])) {
+                    foreach ($errors['deadline'] as $error) {
                         echo $error . "<br />";
                     }
                 }
-            ?>
+                ?>
             </span>
         </div>
         <div class="form-row">
@@ -78,23 +94,23 @@ $user = $session->get('logged_user');
             </select>
         </div>
         <div class="form-row">
-            <input class="button" type="submit" value="Create Task"/>
+            <input class="button" type="submit" value="Create Task" />
         </div>
     </fieldset>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script type="text/javascript">
- flatpickr('#deadline_field', {
-    enableTime: true, // Enable time selection
-    dateFormat: 'Y-m-d H:i', // Date format
-    time_24hr: true, // Use 24-hour time format
-    minDate: 'today', // Set minimum date to today
-    altInput: true, // Show the selected date and time in the input field
-    altFormat: 'F j, Y H:i', // Format for displaying the selected date and time
-    placeholder: 'Select deadline', // Placeholder text
-});
-var simplemde = new SimpleMDE({ element: document.getElementById("description_field") });
+    flatpickr('#deadline_field', {
+        enableTime: true, // Enable time selection
+        dateFormat: 'Y-m-d H:i', // Date format
+        time_24hr: true, // Use 24-hour time format
+        minDate: 'today', // Set minimum date to today
+        altInput: true, // Show the selected date and time in the input field
+        altFormat: 'F j, Y H:i', // Format for displaying the selected date and time
+        placeholder: 'Select deadline', // Placeholder text
+    });
+    var simplemde = new SimpleMDE({ element: document.getElementById("description_field") });
 
 </script>
 <?php include 'partials/footer.php' ?>
