@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
+<?php include 'partials/head.php'; ?>
 
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-</head>
+<!-- Page body -->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row row-deck row-cards">
 
-<body></body>
-
-</html>
+        </div>
+    </div>
+</div>
+<?php include 'partials/footer.php'; ?>

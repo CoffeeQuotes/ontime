@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 28, 2024 at 10:37 PM
+-- Generation Time: Apr 29, 2024 at 11:34 PM
 -- Server version: 10.6.12-MariaDB-1:10.6.12+maria~ubu2004-log
 -- PHP Version: 8.1.14
 
@@ -110,7 +110,12 @@ CREATE TABLE `profiles` (
 
 INSERT INTO `profiles` (`id`, `user_id`, `firstname`, `middlename`, `lastname`, `picture`, `designation`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Shishir', '', 'Kumar', '6621acc5e7562_profile-image.jpg', 'Software Engineer', '2024-04-18 11:24:37', '2024-04-18 23:29:09'),
-(16, 2, 'Ashwani', '', 'Kumar', '662afb76d06bc_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-27 17:28:23');
+(16, 2, 'Ashwani', '', 'Kumar', '662afb76d06bc_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-27 17:28:23'),
+(17, 3, 'Priya', '', 'Singh', '6621acc5e7562_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-29 23:22:56'),
+(18, 4, 'Suresh', '', 'Menon', '662afb76d06bc_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-29 23:03:57'),
+(19, 5, 'Cyril ', '', 'Dabs', '662afb76d06bc_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-29 23:03:57'),
+(20, 6, 'Sulabh', '', 'Pani', '6621acc5e7562_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-29 23:28:13'),
+(21, 7, 'Hozeay', '', 'Gons', '6621acc5e7562_profile-image.jpg', 'Software Engineer', '2024-04-26 00:21:55', '2024-04-29 23:23:10');
 
 -- --------------------------------------------------------
 
@@ -154,6 +159,16 @@ CREATE TABLE `roles` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role_name`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'Can manage teams and create and update projects.', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10'),
+(2, 'contributor', 'Can create and update content.', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10'),
+(3, 'developer', 'Can create, update and delete models and enums', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10'),
+(4, 'editor', 'Can create, update and delete content.', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10');
 
 -- --------------------------------------------------------
 
@@ -308,7 +323,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `phone`, `password`, `email_verified_at`, `phone_verified_at`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'user1', 'user1@email.com', '8798787878', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-17 00:50:30', '2024-04-17 02:09:05'),
-(2, 'user2', 'user2@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08');
+(2, 'user2', 'user2@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08'),
+(3, 'user3', 'user3@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08'),
+(4, 'user4', 'user4@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08'),
+(5, 'user5', 'user5@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08'),
+(6, 'user6', 'user6@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08'),
+(7, 'user7', 'user7@email.com', '8989898989', '$2y$10$vaeKNEl/BPwf/L8V5nMXeu/xZqrdfUNSCryYRPk6V8IxM.bFiVewW', NULL, NULL, 'active', '2024-04-22 21:00:08', '2024-04-22 21:00:08');
 
 -- --------------------------------------------------------
 
@@ -320,6 +340,18 @@ CREATE TABLE `user_roles` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1);
 
 --
 -- Indexes for dumped tables
@@ -449,7 +481,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `profiles`
 --
 ALTER TABLE `profiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -461,7 +493,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -491,7 +523,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
