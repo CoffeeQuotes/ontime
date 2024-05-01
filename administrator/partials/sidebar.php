@@ -60,8 +60,8 @@
                         <a class="dropdown-item" href="./roles-and-permissions.php">
                             Roles &amp; Permissions
                         </a>
-                        <a class="dropdown-item" href="">
-                            Test link
+                        <a class="dropdown-item" href="team-member.php">
+                            Teams
                         </a>
                     </div>
                 </li>
