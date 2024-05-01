@@ -57,7 +57,7 @@
                         </span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="./docs/">
+                        <a class="dropdown-item" href="./roles-and-permissions.php">
                             Roles &amp; Permissions
                         </a>
                         <a class="dropdown-item" href="">

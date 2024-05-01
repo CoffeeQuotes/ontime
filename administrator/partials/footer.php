@@ -49,7 +49,7 @@
 <?php include 'partials/js/lib.php'; ?>
 <!-- Tabler Core -->
 <?php include 'partials/js/core.php'; ?>
-<?php include 'partials/js/scripts.php'; ?>
+<?php // include 'partials/js/scripts.php'; ?>
 </body>
 
 </html>
