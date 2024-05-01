@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 29, 2024 at 11:34 PM
+-- Generation Time: May 01, 2024 at 12:13 PM
 -- Server version: 10.6.12-MariaDB-1:10.6.12+maria~ubu2004-log
 -- PHP Version: 8.1.14
 
@@ -153,6 +153,7 @@ INSERT INTO `projects` (`id`, `project_name`, `project_description`, `status`, `
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
+  `type` enum('system','custom') DEFAULT 'custom',
   `role_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `status` enum('active','inactive') DEFAULT 'active',
@@ -164,11 +165,13 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `role_name`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Can manage teams and create and update projects.', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10'),
-(2, 'contributor', 'Can create and update content.', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10'),
-(3, 'developer', 'Can create, update and delete models and enums', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10'),
-(4, 'editor', 'Can create, update and delete content.', 'active', '2024-04-29 21:50:10', '2024-04-29 21:50:10');
+INSERT INTO `roles` (`id`, `type`, `role_name`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'system', 'admin', 'Can manage teams and create and update projects.', 'active', '2024-04-29 21:50:10', '2024-05-01 11:35:38'),
+(2, 'system', 'contributor', 'Can create and update content.', 'active', '2024-04-29 21:50:10', '2024-05-01 11:35:38'),
+(3, 'system', 'developer', 'Can create, update and delete models and enums', 'active', '2024-04-29 21:50:10', '2024-05-01 11:35:38'),
+(4, 'system', 'editor', 'Can create, update and delete content.', 'active', '2024-04-29 21:50:10', '2024-05-01 11:35:38'),
+(5, 'custom', 'intern', 'Inter can login and see content', 'active', '2024-05-01 12:09:33', '2024-05-01 12:10:34'),
+(6, 'custom', 'executive', 'Executive to monitor performance and Growth', 'active', '2024-05-01 12:12:15', '2024-05-01 12:12:15');
 
 -- --------------------------------------------------------
 
@@ -347,11 +350,18 @@ CREATE TABLE `user_roles` (
 
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
 (1, 1),
-(2, 1),
+(2, 2),
 (3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
 (4, 1),
+(4, 2),
+(4, 4),
 (5, 1),
-(6, 1);
+(7, 1),
+(7, 2),
+(7, 3);
 
 --
 -- Indexes for dumped tables
@@ -493,7 +503,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tasks`

@@ -9,10 +9,14 @@ if (!defined('CONSTANTS')) {
 $page_title = "Roles &amp; Permissions";
 $page_desc = "Configure roles to define the groups of authorities for you project";
 $pdo = Connection::getInstance();
-$sql = "SELECT * FROM roles;";
+$sql = "SELECT * FROM roles WHERE type='system' AND status='active';";
 $statement = $pdo->prepare($sql);
 $statement->execute();
-$roles = $statement->fetchAll(PDO::FETCH_ASSOC);
+$systemRoles = $statement->fetchAll(PDO::FETCH_ASSOC);
+$sql = "SELECT * FROM roles WHERE type='custom' AND status='active';";
+$statement = $pdo->prepare($sql);
+$statement->execute();
+$customRoles = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 $sql = "SELECT * FROM profiles  ORDER BY updated_at DESC;";
 $statement = $pdo->prepare($sql);
@@ -41,7 +45,7 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($roles as $role): ?>
+                                <?php foreach ($systemRoles as $role): ?>
                                     <tr>
 
                                         <td>
@@ -110,7 +114,8 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <h3 class="card-title">Custom Roles</h3>
-                        <a class="btn btn-success" href="javascript:void(0)">
+                        <a class="btn btn-success" href="javascript:void(0)" data-bs-toggle="modal"
+                            data-bs-target="#createCustomRole">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -125,8 +130,117 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
                             Create a custom role
                         </a>
                     </div>
+                    <div class="table-responsive">
+                        <table class="table table-vcenter card-table">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Users</th>
+                                    <th class="w-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($customRoles as $role): ?>
+                                    <tr>
+
+                                        <td>
+                                            <div><?= ucfirst($role['role_name']); ?></div>
+                                            <div class="text-muted"><?= $role['description']; ?></div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex py-1 align-items-center">
+                                                <?php
+                                                $role_id = $role['id'];
+                                                // echo $role_id;
+                                                $sql = "SELECT user_roles.*, users.*, profiles.* FROM user_roles LEFT JOIN users ON users.id = user_roles.user_id LEFT JOIN profiles ON users.id = profiles.user_id WHERE role_id = :role_id;";
+                                                $statement = $pdo->prepare($sql);
+                                                $statement->bindValue(':role_id', $role_id, PDO::PARAM_INT);
+                                                $statement->execute();
+                                                $user_roles = $statement->fetchAll(PDO::FETCH_ASSOC);
+                                                $counter = 0; // Counter variable to keep track of the number of records displayed
+                                                foreach ($user_roles as $user_role):
+                                                    if ($counter < 4) { // Display up to 4 records
+                                                        ?>
+                                                        <span class="avatar me-2"
+                                                            title="<?= $user_role['firstname'] . ' ' . $user_role['lastname'] ?>"
+                                                            style="background-image: url('<?php echo CONSTANTS['site_url'] . 'uploads/' . $user_role['picture']; ?>')"></span>
+                                                        <?php
+                                                        $counter++;
+                                                    } else {
+                                                        $remaining_records = count($user_roles) - 4;
+                                                        echo "+$remaining_records";
+                                                        break; // Exit the loop after displaying "+2", "+3", etc.
+                                                    }
+                                                endforeach;
+                                                ?>
+                                            </div>
+
+                                        </td>
+                                        <td class="text-muted">
+                                            <a href="javascript:void(0)" class="btn btn-primary assignMemberBtn"
+                                                data-bs-toggle="modal" data-bs-target="#assignMemberModal"
+                                                data-role="<?= $role['id'] ?>">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                    <path d="M16 19h6" />
+                                                    <path d="M19 16v6" />
+                                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                                </svg>
+                                                &nbsp; Assign member
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="createCustomRole" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="header-title">
+                    Create a new Role
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="customRoleForm" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="role_name">Role name</label>
+                        <input type="text" id="role_name" class="form-control" name="role_name"
+                            placeholder="Please enter role name" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea id="description" class="form-control" name="description"
+                            placeholder="Please enter description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-playlist-add">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M19 8h-14" />
+                            <path d="M5 12h9" />
+                            <path d="M11 16h-6" />
+                            <path d="M15 16h6" />
+                            <path d="M18 13v6" />
+                        </svg>&nbsp; Create Role
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -222,6 +336,26 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
         }));
     });
     // @formatter:on
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('customRoleForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('create-role.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                if (data.success !== '') {
+                    document.getElementById('customRoleForm').reset();
+                    location.reload();
+                }
+            }).catch(error => {
+
+            });
+        });
+    });
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
