@@ -1,7 +1,8 @@
-<?php 
+<?php
 // Form Validation
-// Empty fields 
-function validateRequiredFields($fields) {
+// Empty fields
+function validateRequiredFields($fields)
+{
     $emptyFields = [];
     foreach ($fields as $key => $value) {
         if (empty($value)) {
@@ -12,7 +13,8 @@ function validateRequiredFields($fields) {
 }
 
 // Validate datetime local
-function validateAndFormatDateTime($dateString) {
+function validateAndFormatDateTime($dateString)
+{
     try {
         $dateTime = new DateTime($dateString);
         // Date and time is valid
@@ -24,8 +26,9 @@ function validateAndFormatDateTime($dateString) {
     }
 }
 
-// Make Excerpt 
-function createExcerpt($text, $maxLength = 100, $ellipsis = '...') {
+// Make Excerpt
+function createExcerpt($text, $maxLength = 100, $ellipsis = '...')
+{
     // Remove HTML tags and trim whitespace
     $text = strip_tags($text);
     $text = trim($text);
@@ -44,9 +47,10 @@ function createExcerpt($text, $maxLength = 100, $ellipsis = '...') {
     return $excerpt;
 }
 
-function displayComments($comments, $parentId = null) {
+function displayComments($comments, $parentId = null)
+{
     // Filter comments based on parent_comment_id
-    $filteredComments = array_filter($comments, function($comment) use ($parentId) {
+    $filteredComments = array_filter($comments, function ($comment) use ($parentId) {
         return $comment['parent_comment_id'] == $parentId;
     });
 
@@ -78,11 +82,12 @@ function displayComments($comments, $parentId = null) {
 
 
 
-function makeDateTimeHumanFriendly($dateTime) {
+function makeDateTimeHumanFriendly($dateTime)
+{
     $timeAgo = strtotime($dateTime);
     $currentTime = time();
     $timeDifference = $currentTime - $timeAgo;
-    
+
     // Define time intervals in seconds
     $intervals = array(
         1 => array('year', 31556926),
@@ -93,24 +98,37 @@ function makeDateTimeHumanFriendly($dateTime) {
         array('minute', 60),
         array('second', 1)
     );
-    
+
     // Iterate over intervals
     foreach ($intervals as $interval) {
         $intervalName = $interval[0];
         $intervalSeconds = $interval[1];
-        
+
         // Calculate time difference in each interval
         $difference = floor($timeDifference / $intervalSeconds);
-        
+
         // If the difference is greater than 0
         if ($difference >= 1) {
             // Return human-friendly format
             return $difference . ' ' . ($difference > 1 ? $intervalName . 's' : $intervalName) . ' ago';
         }
     }
-    
+
     // If the difference is less than a second
     return 'just now';
+}
+// flatten Array
+function flattenArray($array)
+{
+    $result = [];
+    foreach ($array as $item) {
+        if (is_array($item)) {
+            $result = array_merge($result, flattenArray($item));
+        } else {
+            $result[] = $item;
+        }
+    }
+    return $result;
 }
 
 
