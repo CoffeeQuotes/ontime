@@ -10,8 +10,19 @@ if (!defined('CONSTANTS')) {
 
 $pdo = Connection::getInstance();
 $session = new SessionManager();
-
 $errors = array();
+if (!$session->get('logged_user')) {
+    header("Location: " . CONSTANTS['site_url'] . "login.php");
+}
+if ($session->get('profile_incomplete')) {
+    header("Location: " . CONSTANTS['site_url'] . "complete-profile.php");
+}
+if ($session->get('errors')) {
+    $errors = $session->get('errors');
+    $session->delete('errors');
+}
+
+$user = $session->get('logged_user');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -25,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $client_id = $_POST['client_id'] ?? '';
     $category_id = $_POST['category_id'] ?? '';
 
-    // Validate inputs 
+    // Validate inputs
     if ($project_name == '') {
         $errors['project_name'] = 'Please enter project name';
 
@@ -64,13 +75,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $session->delete('success');
     }
 }
-$sql = "SELECT users.*, profiles.firstname, profiles.lastname 
-FROM users LEFT JOIN profiles ON users.id = profiles.user_id 
+$sql = "SELECT users.*, profiles.firstname, profiles.lastname
+FROM users LEFT JOIN profiles ON users.id = profiles.user_id
 WHERE status='active'";
 $statement = $pdo->prepare($sql);
 $statement->execute();
 $project_managers = $statement->fetchAll(PDO::FETCH_ASSOC);
-// Categories 
+// Categories
 $sql = "SELECT * FROM categories WHERE status='active'";
 $statement = $pdo->prepare($sql);
 $statement->execute();

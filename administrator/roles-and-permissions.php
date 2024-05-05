@@ -74,7 +74,7 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
                                                         $counter++;
                                                     } else {
                                                         $remaining_records = count($user_roles) - 4;
-                                                        echo "+$remaining_records";
+                                                        echo "<a href='users.php?role_id=$role_id'>+$remaining_records</a>";
                                                         break; // Exit the loop after displaying "+2", "+3", etc.
                                                     }
                                                 endforeach;
@@ -184,7 +184,7 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
                                                         $counter++;
                                                     } else {
                                                         $remaining_records = count($user_roles) - 4;
-                                                        echo "+$remaining_records";
+                                                        echo "<a href='users.php?role_id=$role_id'>+$remaining_records</a>";
                                                         break; // Exit the loop after displaying "+2", "+3", etc.
                                                     }
                                                 endforeach;

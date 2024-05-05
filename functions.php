@@ -131,6 +131,30 @@ function flattenArray($array)
     return $result;
 }
 
+function get_user_roles($user_id, $pdo)
+{
+    // Prepare the query
+    $query = "SELECT r.role_name FROM user_roles ur INNER JOIN roles r ON ur.role_id = r.id WHERE ur.user_id = ?";
+    $statement = $pdo->prepare($query);
+
+    // Bind the parameter
+    $statement->bindValue(1, $user_id, PDO::PARAM_INT);
+
+    // Execute the query
+    $statement->execute();
+
+    // Fetch the results
+    $roles = [];
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $roles[] = $row['role_name'];
+    }
+
+    // Return the roles
+    return $roles;
+}
+
+
+
 
 
 
