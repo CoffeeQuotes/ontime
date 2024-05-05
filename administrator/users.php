@@ -54,20 +54,21 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 <?php include 'partials/head.php'; ?>
 <div class="page-body">
     <div class="container-xl">
-        <div class="d-flex justify-content-end align-items-center gap-2">
-            <label class="form-label mb-3" for="role">Select Role</label>
-            <select type="text" class="form-select" placeholder="Select a role" id="select-people" name="role_id"
-                value="">
-                <?php
-                foreach ($groupedItems as $type => $items) {
-                    echo "<optgroup label='$type'>";
-                    foreach ($items as $item) {
-                        echo "<option value={$item['id']}>{$item['role_name']}</option>";
-                    }
-                    echo "</optgroup>";
-                }
-                ?>
+        <div class="d-flex mb-3 justify-content-end align-items-center gap-2">
+            <label class="form-label">Select Role</label>
+            <select type="text" class="form-select" placeholder="Select a role" id="select-tags" value="">
+                <option value="" selected disabled></option>
+                <?php foreach ($groupedRoles as $type => $items): ?>
+                    <optgroup label="<?= ucfirst($type) ?>">
+                        <?php foreach ($items as $item): ?>
+                            <option value="<?= $item['id'] ?>" <?php if (isset($role_id) && $role_id == $item['id']):
+                                  echo 'selected';
+                              endif; ?>><?= ucfirst($item['role_name']); ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                <?php endforeach; ?>
             </select>
+            <button id="clearFilter" class="btn btn-default">Clear</button>
         </div>
         <div class="row row-cards">
             <?php foreach ($users as $user): ?>
@@ -187,4 +188,46 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
     })
+</script>
+<script>
+    // @formatter:off
+    document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('select-tags'), {
+            copyClassesToDropdown: false,
+            dropdownClass: 'dropdown-menu ts-dropdown',
+            optionClass: 'dropdown-item',
+            controlInput: '<input>',
+            render: {
+                item: function (data, escape) {
+                    if (data.customProperties) {
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                    }
+                    return '<div>' + escape(data.text) + '</div>';
+                },
+                option: function (data, escape) {
+                    if (data.customProperties) {
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                    }
+                    return '<div>' + escape(data.text) + '</div>';
+                },
+            },
+            onChange: function (e) {
+                var roleId = this.getValue();
+                var url = new URL(window.location.href);
+                url.searchParams.set('role_id', roleId);
+                window.location.href = url.href;
+            }
+        }));
+    });
+    // @formatter:on
+    document.addEventListener("DOMContentLoaded", function () {
+        var clearButton = document.getElementById("clearFilter");
+
+        clearButton.addEventListener("click", function () {
+            var url = new URL(window.location.href);
+            url.search = "";
+            window.location.href = url.href;
+        });
+    });
 </script>
