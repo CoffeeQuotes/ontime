@@ -9,10 +9,6 @@ if (!defined('CONSTANTS')) {
 }
 $pdo = Connection::getInstance();
 
-$sql = "SELECT * FROM categories WHERE status='active'";
-$statement = $pdo->prepare($sql);
-$statement->execute();
-$categories = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 $sql = "SELECT * FROM projects ORDER BY updated_at DESC";
 $statement = $pdo->prepare($sql);
@@ -41,7 +37,7 @@ $page_desc = "Manage Tasks";
     <div class="container-xl">
         <div class="d-flex mb-3 justify-content-end align-items-center gap-2">
             <label class="form-label">Select projects</label>
-            <select type="text" class="form-select" placeholder="Select a role" id="select-tags" value="">
+            <select type="text" class="form-select" placeholder="Select a role" id="project_id" value="">
                 <option value="" selected disabled></option>
                 <?php foreach ($projects as $item): ?>
                     <option value="<?= $item['id'] ?>" <?php if (isset($project_id) && $project_id == $item['id']):
@@ -51,16 +47,6 @@ $page_desc = "Manage Tasks";
             </select>
             <button id="clearFilter" class="btn btn-default">Clear</button>
         </div>
-        <ul class="nav nav-bordered mb-4">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">View all</a>
-            </li>
-            <?php foreach ($categories as $category): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><?= $category['category_name'] ?></a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
         <div class="row">
             <div class="col-12 col-md-6 col-lg">
                 <h2 class="mb-3">To Do</h2>
@@ -545,7 +531,7 @@ $page_desc = "Manage Tasks";
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var el;
-        window.TomSelect && (new TomSelect(el = document.getElementById('select-tags'), {
+        window.TomSelect && (new TomSelect(el = document.getElementById('project_id'), {
             copyClassesToDropdown: false,
             dropdownClass: 'dropdown-menu ts-dropdown',
             optionClass: 'dropdown-item',
@@ -571,5 +557,30 @@ $page_desc = "Manage Tasks";
             //         window.location.href = url.href;
             //     }
         }));
+    });
+
+    // Project Selected %
+    document.getElementById("project_id").addEventListener("change", function (event) {
+        project_id = this.value;
+        var currentUrl = window.location.href;
+        var newUrl;
+        if (currentUrl.indexOf('?') !== -1) {
+            // URL already has a query string
+            newUrl = currentUrl.replace(/(project_id=)[^\&]+/, '$1' + project_id);
+        } else {
+            // URL doesn't have a query string
+            newUrl = currentUrl + '?project_id=' + project_id;
+        }
+        window.location.href = newUrl;
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var clearButton = document.getElementById("clearFilter");
+
+        clearButton.addEventListener("click", function () {
+            var url = new URL(window.location.href);
+            url.search = "";
+            window.location.href = url.href;
+        });
     });
 </script>

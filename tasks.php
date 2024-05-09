@@ -330,15 +330,9 @@ $projects = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     // Project Selected %
     document.getElementById("project_id").addEventListener("change", function (event) {
-        // Get project Id 
         project_id = this.value;
-        // alert(project_id);
-        // change the url with new project_id 
-        // Assuming the URL is in the format "http://example.com/page?project_id=value"
         var currentUrl = window.location.href;
         var newUrl;
-
-        // Check if the URL already has a query string
         if (currentUrl.indexOf('?') !== -1) {
             // URL already has a query string
             newUrl = currentUrl.replace(/(project_id=)[^\&]+/, '$1' + project_id);
@@ -346,8 +340,6 @@ $projects = $statement->fetchAll(PDO::FETCH_ASSOC);
             // URL doesn't have a query string
             newUrl = currentUrl + '?project_id=' + project_id;
         }
-
-        // Redirect to the new URL
         window.location.href = newUrl;
     });
 

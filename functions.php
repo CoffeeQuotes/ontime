@@ -155,7 +155,62 @@ function get_user_roles($user_id, $pdo)
 
 
 
+function formatMoney($amount, $currency)
+{
+    switch ($currency) {
+        case 'INR':
+            $formatted = number_format($amount, 2, '.', ',') . ' INR';
+            break;
+        case 'USD':
+            $formatted = '$' . number_format($amount, 2);
+            break;
+        case 'EUR':
+            $formatted = number_format($amount, 2, '.', ' ') . ' €';
+            break;
+        case 'GBP':
+            $formatted = '£' . number_format($amount, 2);
+            break;
+        case 'JPY':
+            $formatted = number_format($amount, 0) . ' ¥';
+            break;
+        case 'CNY':
+            $formatted = '¥' . number_format($amount, 2);
+            break;
+        case 'AUD':
+            $formatted = 'A$' . number_format($amount, 2);
+            break;
+        case 'CAD':
+            $formatted = 'CA$' . number_format($amount, 2);
+            break;
+        case 'CHF':
+            $formatted = number_format($amount, 2) . ' CHF';
+            break;
+        case 'SEK':
+            $formatted = number_format($amount, 2) . ' kr';
+            break;
+        case 'NZD':
+            $formatted = 'NZ$' . number_format($amount, 2);
+            break;
+        default:
+            $formatted = 'Invalid Currency';
+            break;
+    }
+    return $formatted;
+}
 
+// // Example usage
+// echo formatMoney(99999, 'INR'); // Output: 99,999.00 INR
+// echo formatMoney(99999, 'USD'); // Output: $99,999.00
+// echo formatMoney(99999, 'EUR'); // Output: 99,999.00 €
+// echo formatMoney(99999, 'GBP'); // Output: £99,999.00
+// echo formatMoney(99999, 'JPY'); // Output: 99,999 ¥
+// echo formatMoney(99999, 'CNY'); // Output: ¥99,999.00
+// echo formatMoney(99999, 'AUD'); // Output: A$99,999.00
+// echo formatMoney(99999, 'CAD'); // Output: CA$99,999.00
+// echo formatMoney(99999, 'CHF'); // Output: 99,999.00 CHF
+// echo formatMoney(99999, 'SEK'); // Output: 99,999.00 kr
+// echo formatMoney(99999, 'NZD'); // Output: NZ$99,999.00
+// echo formatMoney(99999, 'XXX'); // Output: Invalid Currency
 
 
 
